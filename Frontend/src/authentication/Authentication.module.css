@@ -1,3 +1,5 @@
+/* ---------------- MAIN WRAPPER ---------------- */
+
 .authenticationWrapper {
   width: 100%;
   min-height: 100vh;
@@ -6,51 +8,102 @@
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(
-    135deg,
-    #07142b,
-    #0d2347,
-    #102b57
-  );
-
   padding: 20px;
   box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(30, 144, 255, 0.25),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(0, 80, 255, 0.2),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #071120,
+      #0d1c34,
+      #102849
+    );
 }
+
+/* ---------------- CONTAINER ---------------- */
 
 .authenticationContainer {
   width: 100%;
   max-width: 450px;
 
-  background: rgba(10, 25, 50, 0.95);
+  background: rgba(12, 22, 42, 0.82);
 
-  border: 2px solid #d4af37;
-  border-radius: 20px;
+  backdrop-filter: blur(14px);
 
-  padding: 25px;
+  border-radius: 26px;
+
+  padding: 24px;
+
+  overflow: hidden;
 
   box-shadow:
-    0 0 20px rgba(212, 175, 55, 0.35),
-    0 0 40px rgba(0, 119, 255, 0.2);
+    0 12px 45px rgba(0, 0, 0, 0.35),
+    0 0 35px rgba(0, 119, 255, 0.15);
 
-  transition: all 0.3s ease;
+  transition: all 0.35s ease;
 }
 
 /* ---------------- NAVBAR ---------------- */
 
 .navbar {
+  position: relative;
+
   display: flex;
+
+  padding: 4px;
+
+  margin-bottom: 28px;
+
+  border-radius: 16px;
 
   background: rgba(255, 255, 255, 0.05);
 
-  border-radius: 14px;
-
   overflow: hidden;
-
-  margin-bottom: 25px;
 }
+
+/* MOVING BLUE INDICATOR */
+
+.slider {
+  position: absolute;
+
+  top: 4px;
+  left: 4px;
+
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #1e90ff,
+    #005eff
+  );
+
+  transition: transform 0.35s ease;
+}
+
+.moveRight {
+  transform: translateX(100%);
+}
+
+/* NAV BUTTON */
 
 .navButton {
   flex: 1;
+
+  position: relative;
+  z-index: 2;
 
   padding: 14px 0;
 
@@ -58,83 +111,107 @@
 
   background: transparent;
 
-  color: #d1d5db;
+  color: #9fb2ca;
 
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
 
   cursor: pointer;
 
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-.navButton:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.active {
-  background: linear-gradient(
-    135deg,
-    #1e90ff,
-    #005eff
-  );
-
+.activeText {
   color: white;
 }
 
-/* ---------------- FORM ---------------- */
+/* ---------------- FORM SWIPE ---------------- */
 
-.formContainer {
+.formsWrapper {
   width: 100%;
+
+  overflow: hidden;
 }
+
+.formsSlider {
+  width: 200%;
+
+  display: flex;
+
+  transition: transform 0.45s ease;
+}
+
+.slideLeft {
+  transform: translateX(-50%);
+}
+
+.formPage {
+  width: 50%;
+
+  padding: 4px;
+
+  box-sizing: border-box;
+}
+
+/* ---------------- FORM ---------------- */
 
 .form {
   display: flex;
   flex-direction: column;
 
   gap: 16px;
-
-  animation: fadeIn 0.25s ease;
 }
 
 .form h2 {
-  color: white;
-
   text-align: center;
 
-  margin-bottom: 10px;
+  color: white;
+
+  margin-bottom: 8px;
+
+  font-size: 28px;
+  font-weight: 700;
 }
+
+/* ---------------- INPUTS ---------------- */
 
 .form input {
   width: 100%;
 
-  padding: 14px;
+  padding: 15px;
 
-  border-radius: 12px;
+  border: none;
 
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
 
   background: rgba(255, 255, 255, 0.06);
 
   color: white;
 
-  outline: none;
-
   font-size: 15px;
+
+  outline: none;
 
   box-sizing: border-box;
 
-  transition: all 0.3s ease;
-}
-
-.form input:focus {
-  border-color: #1e90ff;
-
-  box-shadow: 0 0 10px rgba(30, 144, 255, 0.4);
+  transition:
+    transform 0.2s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .form input::placeholder {
-  color: #b6c2d1;
+  color: #9eb0c8;
+}
+
+.form input:focus {
+  background: rgba(255, 255, 255, 0.09);
+
+  transform: scale(1.01);
+
+  box-shadow:
+    0 0 0 2px rgba(30, 144, 255, 0.3),
+    0 0 20px rgba(30, 144, 255, 0.2);
 }
 
 /* ---------------- BUTTONS ---------------- */
@@ -143,35 +220,44 @@
 .googleButton {
   width: 100%;
 
-  padding: 14px;
+  padding: 15px;
 
   border: none;
 
-  border-radius: 12px;
+  border-radius: 14px;
 
   font-size: 15px;
   font-weight: 600;
 
   cursor: pointer;
 
-  transition: all 0.3s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.3s ease;
 }
 
+/* MAIN BUTTON */
+
 .submitButton {
+  margin-top: 6px;
+
+  color: white;
+
   background: linear-gradient(
     135deg,
     #0077ff,
     #0052cc
   );
-
-  color: white;
 }
 
 .submitButton:hover {
   transform: translateY(-2px);
 
-  box-shadow: 0 8px 18px rgba(0, 119, 255, 0.35);
+  box-shadow:
+    0 10px 25px rgba(0, 119, 255, 0.35);
 }
+
+/* GOOGLE BUTTON */
 
 .googleButton {
   background: white;
@@ -182,28 +268,19 @@
 .googleButton:hover {
   transform: translateY(-2px);
 
-  background: #f3f4f6;
-}
-
-/* ---------------- ANIMATION ---------------- */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  box-shadow:
+    0 10px 25px rgba(255, 255, 255, 0.15);
 }
 
 /* ---------------- MOBILE ---------------- */
 
 @media (max-width: 500px) {
   .authenticationContainer {
-    padding: 20px;
+    padding: 18px;
+  }
+
+  .form h2 {
+    font-size: 24px;
   }
 
   .navButton {

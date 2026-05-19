@@ -1,10 +1,13 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import styles from "./Authentication.module.css";
 
 const Authentication = () => {
   const [activeForm, setActiveForm] = useState("signup");
+
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+
+  // ---------------- SIGNUP STATE ----------------
 
   const [signupData, setSignupData] = useState({
     name: "",
@@ -13,14 +16,14 @@ const Authentication = () => {
     password: "",
   });
 
+  // ---------------- SIGNIN STATE ----------------
+
   const [signinData, setSigninData] = useState({
     identifier: "",
     password: "",
   });
 
-  // --------------------------
-  // INPUT HANDLERS
-  // --------------------------
+  // ---------------- HANDLERS ----------------
 
   const handleSignupChange = (e) => {
     setSignupData({
@@ -36,16 +39,14 @@ const Authentication = () => {
     });
   };
 
-  // --------------------------
-  // SUBMIT HANDLERS
-  // --------------------------
+  // ---------------- SUBMIT ----------------
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
 
     console.log("Signup Data :", signupData);
 
-    // API CALL WILL COME HERE LATER
+    // API LOGIC HERE LATER
   };
 
   const handleSigninSubmit = (e) => {
@@ -53,20 +54,16 @@ const Authentication = () => {
 
     console.log("Signin Data :", signinData);
 
-    // API CALL WILL COME HERE LATER
+    // API LOGIC HERE LATER
   };
 
-  // --------------------------
-  // GOOGLE AUTH
-  // --------------------------
+  // ---------------- GOOGLE AUTH ----------------
 
   const handleGoogleAuth = (type) => {
     console.log(`${type} with Google clicked`);
   };
 
-  // --------------------------
-  // SWIPE LOGIC
-  // --------------------------
+  // ---------------- SWIPE ----------------
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.changedTouches[0].screenX;
@@ -75,11 +72,16 @@ const Authentication = () => {
   const handleTouchEnd = (e) => {
     touchEndX.current = e.changedTouches[0].screenX;
 
-    if (touchStartX.current - touchEndX.current > 50) {
+    const swipeDistance =
+      touchStartX.current - touchEndX.current;
+
+    // LEFT SWIPE
+    if (swipeDistance > 50) {
       setActiveForm("signin");
     }
 
-    if (touchEndX.current - touchStartX.current > 50) {
+    // RIGHT SWIPE
+    if (swipeDistance < -50) {
       setActiveForm("signup");
     }
   };
@@ -92,10 +94,21 @@ const Authentication = () => {
         onTouchEnd={handleTouchEnd}
       >
         {/* NAVBAR */}
+
         <div className={styles.navbar}>
+          <div
+            className={`${styles.slider} ${
+              activeForm === "signin"
+                ? styles.moveRight
+                : ""
+            }`}
+          />
+
           <button
             className={`${styles.navButton} ${
-              activeForm === "signup" ? styles.active : ""
+              activeForm === "signup"
+                ? styles.activeText
+                : ""
             }`}
             onClick={() => setActiveForm("signup")}
           >
@@ -104,7 +117,9 @@ const Authentication = () => {
 
           <button
             className={`${styles.navButton} ${
-              activeForm === "signin" ? styles.active : ""
+              activeForm === "signin"
+                ? styles.activeText
+                : ""
             }`}
             onClick={() => setActiveForm("signin")}
           >
@@ -112,95 +127,120 @@ const Authentication = () => {
           </button>
         </div>
 
-        {/* FORMS */}
-        <div className={styles.formContainer}>
-          {activeForm === "signup" ? (
-            <form
-              className={styles.form}
-              onSubmit={handleSignupSubmit}
-            >
-              <h2>Create Account</h2>
+        {/* FORM SLIDER */}
 
-              <input
-                type="text"
-                name="name"
-                placeholder="Full Name"
-                value={signupData.name}
-                onChange={handleSignupChange}
-              />
+        <div className={styles.formsWrapper}>
+          <div
+            className={`${styles.formsSlider} ${
+              activeForm === "signin"
+                ? styles.slideLeft
+                : ""
+            }`}
+          >
+            {/* SIGNUP */}
 
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={signupData.email}
-                onChange={handleSignupChange}
-              />
-
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number"
-                value={signupData.phone}
-                onChange={handleSignupChange}
-              />
-
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={signupData.password}
-                onChange={handleSignupChange}
-              />
-
-              <button type="submit" className={styles.submitButton}>
-                Register
-              </button>
-
-              <button
-                type="button"
-                className={styles.googleButton}
-                onClick={() => handleGoogleAuth("Signup")}
+            <div className={styles.formPage}>
+              <form
+                className={styles.form}
+                onSubmit={handleSignupSubmit}
               >
-                Continue with Google
-              </button>
-            </form>
-          ) : (
-            <form
-              className={styles.form}
-              onSubmit={handleSigninSubmit}
-            >
-              <h2>Welcome Back</h2>
+                <h2>Create Account</h2>
 
-              <input
-                type="text"
-                name="identifier"
-                placeholder="Email or Phone Number"
-                value={signinData.identifier}
-                onChange={handleSigninChange}
-              />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  value={signupData.name}
+                  onChange={handleSignupChange}
+                />
 
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={signinData.password}
-                onChange={handleSigninChange}
-              />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={signupData.email}
+                  onChange={handleSignupChange}
+                />
 
-              <button type="submit" className={styles.submitButton}>
-                Login
-              </button>
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={signupData.phone}
+                  onChange={handleSignupChange}
+                />
 
-              <button
-                type="button"
-                className={styles.googleButton}
-                onClick={() => handleGoogleAuth("Signin")}
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={signupData.password}
+                  onChange={handleSignupChange}
+                />
+
+                <button
+                  type="submit"
+                  className={styles.submitButton}
+                >
+                  Register
+                </button>
+
+                <button
+                  type="button"
+                  className={styles.googleButton}
+                  onClick={() =>
+                    handleGoogleAuth("Signup")
+                  }
+                >
+                  Continue with Google
+                </button>
+              </form>
+            </div>
+
+            {/* SIGNIN */}
+
+            <div className={styles.formPage}>
+              <form
+                className={styles.form}
+                onSubmit={handleSigninSubmit}
               >
-                Continue with Google
-              </button>
-            </form>
-          )}
+                <h2>Welcome Back</h2>
+
+                <input
+                  type="text"
+                  name="identifier"
+                  placeholder="Email or Phone Number"
+                  value={signinData.identifier}
+                  onChange={handleSigninChange}
+                />
+
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={signinData.password}
+                  onChange={handleSigninChange}
+                />
+
+                <button
+                  type="submit"
+                  className={styles.submitButton}
+                >
+                  Login
+                </button>
+
+                <button
+                  type="button"
+                  className={styles.googleButton}
+                  onClick={() =>
+                    handleGoogleAuth("Signin")
+                  }
+                >
+                  Continue with Google
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
