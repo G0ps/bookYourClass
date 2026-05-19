@@ -1,0 +1,55 @@
+import { useEffect, useState } from "react";
+import { GET } from "../api/apiClient";
+import { API_ENDPOINTS } from "../api/endpoints";
+
+const Home = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await GET(API_ENDPOINTS.PRODUCTS.GET_ALL);
+
+        setProducts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  return (
+    <div>
+      {products.map((item) => (
+        <p key={item.id}>{item.name}</p>
+      ))}
+    </div>
+  );
+};
+
+export default Home;
+
+
+==========================================================
+==========================================================
+==========================================================
+
+import { POST } from "../api/apiClient";
+import { API_ENDPOINTS } from "../api/endpoints";
+
+const loginUser = async () => {
+  try {
+    const response = await POST(
+      API_ENDPOINTS.AUTH.LOGIN,
+      {
+        email: "test@gmail.com",
+        password: "123456",
+      }
+    );
+
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+};

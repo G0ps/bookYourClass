@@ -1,0 +1,212 @@
+.authenticationWrapper {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    #07142b,
+    #0d2347,
+    #102b57
+  );
+
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.authenticationContainer {
+  width: 100%;
+  max-width: 450px;
+
+  background: rgba(10, 25, 50, 0.95);
+
+  border: 2px solid #d4af37;
+  border-radius: 20px;
+
+  padding: 25px;
+
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.35),
+    0 0 40px rgba(0, 119, 255, 0.2);
+
+  transition: all 0.3s ease;
+}
+
+/* ---------------- NAVBAR ---------------- */
+
+.navbar {
+  display: flex;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  margin-bottom: 25px;
+}
+
+.navButton {
+  flex: 1;
+
+  padding: 14px 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #d1d5db;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.navButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.active {
+  background: linear-gradient(
+    135deg,
+    #1e90ff,
+    #005eff
+  );
+
+  color: white;
+}
+
+/* ---------------- FORM ---------------- */
+
+.formContainer {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  animation: fadeIn 0.25s ease;
+}
+
+.form h2 {
+  color: white;
+
+  text-align: center;
+
+  margin-bottom: 10px;
+}
+
+.form input {
+  width: 100%;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: rgba(255, 255, 255, 0.06);
+
+  color: white;
+
+  outline: none;
+
+  font-size: 15px;
+
+  box-sizing: border-box;
+
+  transition: all 0.3s ease;
+}
+
+.form input:focus {
+  border-color: #1e90ff;
+
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.4);
+}
+
+.form input::placeholder {
+  color: #b6c2d1;
+}
+
+/* ---------------- BUTTONS ---------------- */
+
+.submitButton,
+.googleButton {
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.submitButton {
+  background: linear-gradient(
+    135deg,
+    #0077ff,
+    #0052cc
+  );
+
+  color: white;
+}
+
+.submitButton:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 18px rgba(0, 119, 255, 0.35);
+}
+
+.googleButton {
+  background: white;
+
+  color: #111827;
+}
+
+.googleButton:hover {
+  transform: translateY(-2px);
+
+  background: #f3f4f6;
+}
+
+/* ---------------- ANIMATION ---------------- */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------- MOBILE ---------------- */
+
+@media (max-width: 500px) {
+  .authenticationContainer {
+    padding: 20px;
+  }
+
+  .navButton {
+    font-size: 14px;
+  }
+}
