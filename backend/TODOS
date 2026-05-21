@@ -1,4 +1,12 @@
-* need cascading delete on "bookings" with "user" deletion
+* need cascading delete on "bookings" with "user" deletion (handle manually)
 
 IMPORTANT NOTE :
 * Have to handle foreign relationships between tables manualy .
+
+
+tommorow : 
+add venue controller and middle ware for jwt verification setup.
+add booking controller .
+
+later : 
+pagination
