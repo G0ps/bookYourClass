@@ -5,7 +5,11 @@ import cors from "cors"
 import dotenv from 'dotenv'
 dotenv.config({ path: './backend/.env' })
 
+/* routes configuration */
 import mainRouter from "./routes/mainRouter.js"
+
+/* Database Connectivity */
+import connectDatabases from "./repositories/connectDatabases.js"
 
 const app = express();
 
@@ -14,6 +18,8 @@ const port = process.env.APPLICATION_PORT
 app.use(express.json())
 app.use(cors({origin : true}))
 app.use(mainRouter);
+
+connectDatabases();
 
 app.get("/test" , (req , res)=>{
     return res.json({"RESPONSE" : "test run"})

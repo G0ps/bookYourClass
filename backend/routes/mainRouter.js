@@ -1,4 +1,4 @@
-import authRoutes from "./authRoutes.js";
+import authRoutes from "./authenticationRoutes.js";
 import venueRoutes from "./venueRoutes.js";
 import bookingRoutes from "./bookingRoutes.js";
 

@@ -1,0 +1,4 @@
+* need cascading delete on "bookings" with "user" deletion
+
+IMPORTANT NOTE :
+* Have to handle foreign relationships between tables manualy .
