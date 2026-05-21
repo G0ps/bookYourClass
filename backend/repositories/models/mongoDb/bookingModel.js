@@ -31,7 +31,7 @@ const bookingSchema = new mongoose.Schema({
 
 });
 
-bookingschema.index({
+bookingSchema.index({
     venueId : 1,
     startDate : 1,
     endDate : 1
