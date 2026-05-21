@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import cookieParser from "cookie-parser";
 
 /* .env config */
 import dotenv from 'dotenv'
@@ -17,6 +18,8 @@ const port = process.env.APPLICATION_PORT
 
 app.use(express.json())
 app.use(cors({origin : true}))
+app.use(cookieParser()); // for cookies handling
+
 app.use(mainRouter);
 
 connectDatabases();

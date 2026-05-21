@@ -14,4 +14,18 @@ const insertNewUser = async (data) => {
     }
 } 
 
-export default {insertNewUser}
+const getUserByEmail = async (email) => {
+  try {
+    const user = await userModel.findOne({
+      email,
+    });
+
+    return user;
+  } 
+  catch(error)
+    {
+        return {status : "error" , error};
+    }
+};
+
+export default {insertNewUser , getUserByEmail}
