@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
-
 import authenticationRepository from "../repositories/authenticationRepository.js"
+
+import jwt_service from "../services/jwt_service.js";
 
 export const register = async (req , res) => {
     const {
@@ -43,7 +43,10 @@ export const register = async (req , res) => {
             throw response.error;
         }
 
-        return res.status(201).json(response);
+        // assigning new token
+        jwt_service.assign_token(res , response.new_user);
+
+        return res.status(201).json({status : "success"});
     }
     catch(error)
     {
@@ -85,22 +88,7 @@ export const login = async(req , res) => {
             throw new Error("password missmatched");
         }
         // assigning new token
-        const token = jwt.sign(
-            {
-                userId: user._id,
-                role: user.typeOfUser,
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "2m",
-            }
-        );
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
+        jwt_service.assign_token(res , user);
 
         return res.status(202).json({status : "success"});
 
