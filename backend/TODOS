@@ -5,8 +5,8 @@ IMPORTANT NOTE :
 
 
 tommorow : 
-add venue controller.
 add booking controller .
+add user management routes and handle cascade deletions
 
 later : 
 pagination
