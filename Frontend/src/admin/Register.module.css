@@ -42,7 +42,7 @@
 
   border-radius: 26px;
 
-  padding: 24px;
+  padding: 28px 24px;
 
   overflow: hidden;
 
@@ -53,100 +53,10 @@
   transition: all 0.35s ease;
 }
 
-/* ---------------- NAVBAR ---------------- */
-
-.navbar {
-  position: relative;
-
-  display: flex;
-
-  padding: 4px;
-
-  margin-bottom: 28px;
-
-  border-radius: 16px;
-
-  background: rgba(255, 255, 255, 0.05);
-
-  overflow: hidden;
-}
-
-/* MOVING BLUE INDICATOR */
-
-.slider {
-  position: absolute;
-
-  top: 4px;
-  left: 4px;
-
-  width: calc(50% - 4px);
-  height: calc(100% - 8px);
-
-  border-radius: 12px;
-
-  background: linear-gradient(
-    135deg,
-    #1e90ff,
-    #005eff
-  );
-
-  transition: transform 0.35s ease;
-}
-
-.moveRight {
-  transform: translateX(100%);
-}
-
-/* NAV BUTTON */
-
-.navButton {
-  flex: 1;
-
-  position: relative;
-  z-index: 2;
-
-  padding: 14px 0;
-
-  border: none;
-
-  background: transparent;
-
-  color: #9fb2ca;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: color 0.3s ease;
-}
-
-.activeText {
-  color: white;
-}
-
-/* ---------------- FORM SWIPE ---------------- */
-
-.formsWrapper {
-  width: 100%;
-
-  overflow: hidden;
-}
-
-.formsSlider {
-  width: 200%;
-
-  display: flex;
-
-  transition: transform 0.45s ease;
-}
-
-.slideLeft {
-  transform: translateX(-50%);
-}
+/* ---------------- FORM PAGE ---------------- */
 
 .formPage {
-  width: 50%;
+  width: 100%;
 
   padding: 4px;
 
@@ -167,7 +77,7 @@
 
   color: white;
 
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 
   font-size: 28px;
   font-weight: 700;
@@ -276,14 +186,60 @@
 
 @media (max-width: 500px) {
   .authenticationContainer {
-    padding: 18px;
+    padding: 20px 16px;
   }
 
   .form h2 {
     font-size: 24px;
   }
 
-  .navButton {
+  .form input,
+  .submitButton,
+  .googleButton {
+    padding: 14px;
     font-size: 14px;
   }
+}
+/* ---------------- SELECT FIELD ---------------- */
+
+.selectField {
+  width: 100%;
+
+  padding: 15px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  color: white;
+
+  font-size: 15px;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.selectField:focus {
+  background: rgba(255, 255, 255, 0.09);
+
+  transform: scale(1.01);
+
+  box-shadow:
+    0 0 0 2px rgba(30, 144, 255, 0.3),
+    0 0 20px rgba(30, 144, 255, 0.2);
+}
+
+.selectField option {
+  background: #0d1c34;
+  color: white;
 }

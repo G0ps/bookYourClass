@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Authentication from "./authentication/Authentication.jsx";
+import Authentication from "./admin/Register.jsx";
 
 /**
  * Route Configuration
@@ -8,7 +8,7 @@ import Authentication from "./authentication/Authentication.jsx";
 const APP_ROUTES = [
   {
     path: "/",
-    element: <><Authentication></Authentication></>,
+    element: <>HI</>,
   },
   {
     path: "/about",

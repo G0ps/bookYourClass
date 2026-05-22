@@ -22,4 +22,8 @@ const assign_token = (res , user) => {
     return;
 }
 
-export default {assign_token};
+const verifyToken = async (token) => {
+  return jwt.verify(token, process.env.JWT_SECRET);
+};
+
+export default {assign_token , verifyToken,};
