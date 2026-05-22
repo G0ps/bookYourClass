@@ -5,7 +5,7 @@ IMPORTANT NOTE :
 
 
 tommorow : 
-add venue controller and middle ware for jwt verification setup.
+add venue controller.
 add booking controller .
 
 later : 
