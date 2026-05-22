@@ -5,22 +5,25 @@ import autherizationMiddleware from "../middlewares/autherizationMiddleware.js";
 
 const bookingRoutes = express.Router();
 
-bookingRoutes.post("/request/venue" , (req, res) => {
+bookingRoutes.post("/request/venue" ,authenticationMiddleware , autherizationMiddleware("admin" , "staff") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
-bookingRoutes.post("/request/cancel", (req, res) => {
+bookingRoutes.patch("/request" ,authenticationMiddleware , autherizationMiddleware("admin" , "staff") , (req , res) => {
+  return res.json({ message: "placeholder" });
+});
+bookingRoutes.post("/request/cancel",authenticationMiddleware , autherizationMiddleware("admin" , "staff") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
 
-bookingRoutes.post("/request/approve", (req, res) => {
+bookingRoutes.post("/request/approve",authenticationMiddleware , autherizationMiddleware("admin" , "staff") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
-bookingRoutes.post("/request/reject", (req, res) => {
+bookingRoutes.post("/request/reject",authenticationMiddleware , autherizationMiddleware("admin" , "staff") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
 
 // get booking by ID
-bookingRoutes.get('/booking' , (req, res) => {
+bookingRoutes.get('/booking' ,authenticationMiddleware , autherizationMiddleware("admin" , "staff") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
 

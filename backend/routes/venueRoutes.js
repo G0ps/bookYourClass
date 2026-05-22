@@ -6,21 +6,21 @@ import autherizationMiddleware from "../middlewares/autherizationMiddleware.js";
 const venueRoutes = express.Router();
 
 // manage venue
-venueRoutes.post("/venue/add",authenticationMiddleware , autherizationMiddleware("student") , (req, res) => {
+venueRoutes.post("/venue/add",authenticationMiddleware , autherizationMiddleware("staff" , "admin") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
-venueRoutes.delete("/venue/:id", (req, res) => {
+venueRoutes.delete("/venue/:id",authenticationMiddleware , autherizationMiddleware("staff" , "admin") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
-venueRoutes.put("/venue/:id", (req, res) => {
+venueRoutes.put("/venue/:id",authenticationMiddleware , autherizationMiddleware("staff" , "admin") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
-venueRoutes.patch("/venue/:id", (req, res) => {
+venueRoutes.patch("/venue/:id",authenticationMiddleware , autherizationMiddleware("staff" , "admin") , (req, res) => {
   return res.json({ message: "placeholder" });
 });
 
 //get venue
-venueRoutes.get('/venue',(req , res) => {
+venueRoutes.get('/venue',authenticationMiddleware ,(req , res) => {
   return res.json({ message: "placeholder" });
 });
 
