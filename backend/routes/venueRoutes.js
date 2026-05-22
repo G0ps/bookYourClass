@@ -8,7 +8,6 @@ import {
   deleteVenue,
   putVenue,
   patchVenue,
-  getVenues,
 } from "../controllers/venueController.js";
 
 const venueRoutes = express.Router();
@@ -42,11 +41,11 @@ venueRoutes.patch(
   patchVenue
 );
 
-// get venues
+// get venues // pagination
 venueRoutes.get(
   "/venue",
   authenticationMiddleware,
-  getVenues
+  (req , res) => {return res.json({status : "placeholder"})}
 );
 
 export default venueRoutes;
