@@ -1,7 +1,5 @@
 import express from "express";
 
-import authenticationMiddleware from "../middlewares/jwtAuthenticationMiddleware.js";
-
 import autherizationMiddleware from "../middlewares/autherizationMiddleware.js";
 
 import {
@@ -14,7 +12,6 @@ const userRoutes = express.Router();
 
 userRoutes.get(
   "/",
-  authenticationMiddleware,
   autherizationMiddleware(
     "admin",
     "staff"
@@ -24,7 +21,6 @@ userRoutes.get(
 
 userRoutes.patch(
   "/",
-  authenticationMiddleware,
   autherizationMiddleware(
     "admin",
     "staff"
@@ -34,7 +30,6 @@ userRoutes.patch(
 
 userRoutes.delete(
   "/",
-  authenticationMiddleware,
   autherizationMiddleware(
     "admin",
     "staff"
