@@ -14,28 +14,28 @@ const venueRoutes = express.Router();
 
 // manage venue
 venueRoutes.post(
-  "/venue/add",
+  "/add",
   authenticationMiddleware,
   autherizationMiddleware("staff", "admin"),
   addVenue
 );
 
 venueRoutes.delete(
-  "/venue/:id",
+  "/:id",
   authenticationMiddleware,
   autherizationMiddleware("staff", "admin"),
   deleteVenue
 );
 
 venueRoutes.put(
-  "/venue/:id",
+  "/:id",
   authenticationMiddleware,
   autherizationMiddleware("staff", "admin"),
   putVenue
 );
 
 venueRoutes.patch(
-  "/venue/:id",
+  "/:id",
   authenticationMiddleware,
   autherizationMiddleware("staff", "admin"),
   patchVenue
@@ -43,9 +43,9 @@ venueRoutes.patch(
 
 // get venues // pagination
 venueRoutes.get(
-  "/venue",
+  "/",
   authenticationMiddleware,
-  (req , res) => {return res.json({status : "placeholder"})}
+  (req , res) => {return res.json({status : "placeholder needing pagination"})}
 );
 
 export default venueRoutes;
