@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./Login.module.css";
-import { ENDPOINTS } from "../endpoints.js";
-
-console.log("endpoints : " , ENDPOINTS)
+import { ENDPOINTS } from "../endpoints";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -13,6 +14,35 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  // Auto login attempt
+  useEffect(() => {
+    const autoLogin = async () => {
+      try {
+        const response = await fetch(
+          ENDPOINTS.AUTHENTICATION.LOGIN,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          navigate("/admin/dashboard");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    autoLogin();
+  }, [navigate]);
 
   const handleChange = (event) => {
     setFormData((previous) => ({
@@ -32,10 +62,10 @@ export default function Login() {
         ENDPOINTS.AUTHENTICATION.LOGIN,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
           body: JSON.stringify(formData),
         }
       );
@@ -46,9 +76,7 @@ export default function Login() {
         throw new Error(data.message || "Login failed");
       }
 
-      setMessage("Login successful");
-
-      console.log(data);
+      navigate("/admin/dashboard");
     } catch (error) {
       setMessage(error.message);
     } finally {

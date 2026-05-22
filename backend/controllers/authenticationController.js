@@ -55,6 +55,14 @@ export const register = async (req , res) => {
 }
 
 export const login = async(req , res) => {
+    if (req.isAuthenticated) {
+        return res.status(200).json({
+            success: true,
+            message: "Already logged in",
+            user: req.user,
+        });
+    }
+
     const {
         email,
         password
