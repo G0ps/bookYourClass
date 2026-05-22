@@ -1,39 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Authentication from "./admin/Register.jsx";
 
-/**
- * Route Configuration
- */
+import Login from "./login/Login";
 
-const APP_ROUTES = [
-  {
-    path: "/",
-    element: <>HI</>,
-  },
-  {
-    path: "/about",
-    element: <div>About</div>,
-  },
-  {
-    path: "/login",
-    element: <div>Login</div>,
-  },
-];
-
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {APP_ROUTES.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            element={route.element}
-          />
-        ))}
+        <Route path="/" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;
