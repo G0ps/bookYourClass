@@ -11,10 +11,21 @@ export default function VenueManagement() {
 
   const [limit] = useState(10);
 
+  const [search, setSearch] =
+    useState("");
+
   const [block, setBlock] =
     useState("");
 
-  const [search, setSearch] =
+  const [
+    inchargeName,
+    setInchargeName,
+  ] = useState("");
+
+  const [inchargeId, setInchargeId] =
+    useState("");
+
+  const [capacity, setCapacity] =
     useState("");
 
   const [pagination, setPagination] =
@@ -33,12 +44,33 @@ export default function VenueManagement() {
         query.append("page", page);
         query.append("limit", limit);
 
+        if (search) {
+          query.append("search", search);
+        }
+
         if (block) {
           query.append("block", block);
         }
 
-        if (search) {
-          query.append("search", search);
+        if (inchargeName) {
+          query.append(
+            "inchargeName",
+            inchargeName
+          );
+        }
+
+        if (inchargeId) {
+          query.append(
+            "inchargeId",
+            inchargeId
+          );
+        }
+
+        if (capacity) {
+          query.append(
+            "capacity",
+            capacity
+          );
         }
 
         const res = await fetch(
@@ -58,52 +90,126 @@ export default function VenueManagement() {
     };
 
     fetchVenues();
-  }, [page, limit, block, search]);
+  }, [
+    page,
+    limit,
+    search,
+    block,
+    inchargeName,
+    inchargeId,
+    capacity,
+  ]);
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>
+      <h1 className={styles.heading}>
         Venue Management
-      </h2>
+      </h1>
 
-      <div className={styles.filters}>
+      <div className={styles.filterSection}>
         <input
           type="text"
-          placeholder="Search venue"
+          placeholder="Search Venue Name / ID"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
             setPage(1);
           }}
+          className={styles.input}
         />
 
         <input
           type="text"
-          placeholder="Filter by block"
+          placeholder="Block"
           value={block}
           onChange={(e) => {
             setBlock(e.target.value);
             setPage(1);
           }}
+          className={styles.input}
+        />
+
+        <input
+          type="text"
+          placeholder="Incharge Name"
+          value={inchargeName}
+          onChange={(e) => {
+            setInchargeName(
+              e.target.value
+            );
+            setPage(1);
+          }}
+          className={styles.input}
+        />
+
+        <input
+          type="text"
+          placeholder="Incharge IDs (coma seperated)"
+          value={inchargeId}
+          onChange={(e) => {
+            setInchargeId(
+              e.target.value
+            );
+            setPage(1);
+          }}
+          className={styles.input}
+        />
+
+        <input
+          type="number"
+          placeholder="Capacity"
+          value={capacity}
+          onChange={(e) => {
+            setCapacity(
+              e.target.value
+            );
+            setPage(1);
+          }}
+          className={styles.input}
         />
       </div>
 
-      <div className={styles.table}>
-        {venues?.map((v) => (
+      <div className={styles.venueSection}>
+        {venues?.map((venue) => (
           <div
-            key={v._id}
-            className={styles.row}
+            key={venue._id}
+            className={styles.card}
           >
-            <div>{v.name}</div>
-
-            <div>{v.block}</div>
-
-            <div>{v.capacity}</div>
+            <div>
+              <span>Name :</span>{" "}
+              {venue.name}
+            </div>
 
             <div>
-              {v.inchargeIds
+              <span>Block :</span>{" "}
+              {venue.block}
+            </div>
+
+            <div>
+              <span>Capacity :</span>{" "}
+              {venue.capacity}
+            </div>
+
+            <div>
+              <span>Venue ID :</span>{" "}
+              {venue._id}
+            </div>
+
+            <div>
+              <span>Incharges :</span>{" "}
+              {venue.inchargeIds
                 ?.map(
-                  (staff) => staff.name
+                  (staff) =>
+                    `${staff.name}`
+                )
+                .join(", ")}
+            </div>
+
+            <div>
+              <span>Incharge IDs :</span>{" "}
+              {venue.inchargeIds
+                ?.map(
+                  (staff) => staff._id
                 )
                 .join(", ")}
             </div>

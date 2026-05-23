@@ -172,6 +172,9 @@ export const getVenues = async (
       limit = 10,
       block,
       search,
+      inchargeName,
+      inchargeId,
+      capacity,
     } = req.query;
 
     const response =
@@ -180,6 +183,9 @@ export const getVenues = async (
         limit: Number(limit),
         block,
         search,
+        inchargeName,
+        inchargeId,
+        capacity,
       });
 
     return res.status(200).json(response);

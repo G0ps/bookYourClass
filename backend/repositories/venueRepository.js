@@ -99,11 +99,30 @@ export const getVenues = async ({
   limit,
   block,
   search,
+  inchargeName,
+  inchargeId,
+  capacity,
 }) => {
   const query = {};
 
   if (block) {
-    query.block = block;
+    query.block = {
+      $regex: block,
+      $options: "i",
+    };
+  }
+
+  if (capacity) {
+    query.capacity = Number(capacity);
+  }
+
+  if (inchargeId) {
+    const idsArray =
+      inchargeId.split(",");
+
+    query.inchargeIds = {
+      $in: idsArray,
+    };
   }
 
   if (search) {
@@ -120,7 +139,32 @@ export const getVenues = async ({
           $options: "i",
         },
       },
+      {
+        _id: search.match(
+          /^[0-9a-fA-F]{24}$/
+        )
+          ? search
+          : null,
+      },
     ];
+  }
+
+  let inchargeUsers = [];
+
+  if (inchargeName) {
+    inchargeUsers =
+      await userModel.find({
+        name: {
+          $regex: inchargeName,
+          $options: "i",
+        },
+      });
+
+    query.inchargeIds = {
+      $in: inchargeUsers.map(
+        (u) => u._id
+      ),
+    };
   }
 
   const skip = (page - 1) * limit;
@@ -153,6 +197,7 @@ export const getVenues = async ({
     },
   };
 };
+
 
 export default {
   insertNewVenue,
