@@ -35,10 +35,8 @@ export default function Login() {
 
         // alert("data received : " , response);
 
-        const role = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("role="))
-          ?.split("=")[1];
+        const role = data.role
+        localStorage.setItem("role", role);
 
         if (response.ok && data.success && role !== undefined) {
           navigate(`/${role}`);
@@ -86,10 +84,8 @@ export default function Login() {
         throw new Error(data.message || "Login failed");
       }
 
-       const role = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("role="))
-        ?.split("=")[1];
+       const role = data.role
+       localStorage.setItem("role", role);
 
         // alert("response received : " , response);
 

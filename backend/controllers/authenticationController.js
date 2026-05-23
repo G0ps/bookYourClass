@@ -46,7 +46,7 @@ export const register = async (req , res) => {
         // assigning new token
         jwt_service.assign_token(res , response.new_user);
 
-        return res.status(201).json({status : "success"});
+        return res.status(201).json({status : "success" , role : new_user.typeOfUser});
     }
     catch(error)
     {
@@ -98,7 +98,7 @@ export const login = async(req , res) => {
         // assigning new token
         jwt_service.assign_token(res , user);
 
-        return res.status(202).json({status : "success"});
+        return res.status(202).json({status : "success" , role : user.typeOfUser});
 
     }
     catch(error)
