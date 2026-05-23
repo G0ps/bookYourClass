@@ -11,7 +11,8 @@ export default function UserManagement() {
   const [typeOfUser, setTypeOfUser] =
     useState("");
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] =
+    useState("");
 
   const [pagination, setPagination] =
     useState({
@@ -61,19 +62,20 @@ export default function UserManagement() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>
+      <h1 className={styles.heading}>
         User Management
-      </h2>
+      </h1>
 
-      <div className={styles.filters}>
+      <div className={styles.filterSection}>
         <input
           type="text"
-          placeholder="Search user"
+          placeholder="Search by Name, Email, ID or Contact Number"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
             setPage(1);
           }}
+          className={styles.input}
         />
 
         <select
@@ -82,6 +84,7 @@ export default function UserManagement() {
             setTypeOfUser(e.target.value);
             setPage(1);
           }}
+          className={styles.select}
         >
           <option value="">
             All Users
@@ -97,16 +100,35 @@ export default function UserManagement() {
         </select>
       </div>
 
-      <div className={styles.table}>
+      <div className={styles.userSection}>
         {users?.map((user) => (
           <div
             key={user._id}
-            className={styles.row}
+            className={styles.card}
           >
-            <div>{user.name}</div>
-            <div>{user.email}</div>
             <div>
+              <span>Name :</span>{" "}
+              {user.name}
+            </div>
+
+            <div>
+              <span>Email :</span>{" "}
+              {user.email}
+            </div>
+
+            <div>
+              <span>Contact :</span>{" "}
+              {user.contactNumber}
+            </div>
+
+            <div>
+              <span>User Type :</span>{" "}
               {user.typeOfUser}
+            </div>
+
+            <div>
+              <span>ID :</span>{" "}
+              {user._id}
             </div>
           </div>
         ))}

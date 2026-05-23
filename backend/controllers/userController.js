@@ -1,29 +1,72 @@
 import userRepository from "../repositories/userRepository.js";
 
-export const getUsers = async (req, res) => {
-  try {
-    const {
-      page = 1,
-      limit = 10,
-      typeOfUser,
-      search,
-    } = req.query;
+export const getUsers = async ({
+  page,
+  limit,
+  typeOfUser,
+  search,
+}) => {
+  const query = {};
 
-    const response = await userRepository.getUsers({
-      page: Number(page),
-      limit: Number(limit),
-      typeOfUser,
-      search,
-    });
-
-    return res.status(200).json(response);
-  } catch (error) {
-    return res.status(500).json({
-      status: "error",
-      message: error.message,
-    });
+  if (typeOfUser) {
+    query.typeOfUser = typeOfUser;
   }
+
+  if (search) {
+    query.$or = [
+      {
+        name: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        email: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        contactNumber: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        _id: search.match(/^[0-9a-fA-F]{24}$/)
+          ? search
+          : null,
+      },
+    ];
+  }
+
+  const skip = (page - 1) * limit;
+
+  const users = await userModel
+    .find(query)
+    .skip(skip)
+    .limit(limit)
+    .sort({ name: 1 });
+
+  const totalUsers =
+    await userModel.countDocuments(
+      query
+    );
+
+  return {
+    status: "success",
+    users,
+    pagination: {
+      currentPage: page,
+      totalPages: Math.ceil(
+        totalUsers / limit
+      ),
+      totalUsers,
+      limit,
+    },
+  };
 };
+
 
 export const patchUser = async (
   req,
