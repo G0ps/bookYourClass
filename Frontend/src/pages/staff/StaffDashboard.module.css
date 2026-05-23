@@ -1,0 +1,179 @@
+/* src/pages/staff/StaffDashboard.module.css */
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  background: #111827;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  padding: 1.2rem;
+  box-sizing: border-box;
+  border-right: 1px solid #374151;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.open {
+  width: 280px;
+}
+
+.closed {
+  width: 75px;
+}
+
+.sidebar h2 {
+  margin-bottom: 1.2rem;
+  font-size: 1.2rem;
+  color: #f9fafb;
+}
+
+/* TOGGLE BUTTON */
+
+.toggleBtn {
+  background: #2563eb;
+  color: white;
+  border: none;
+
+  width: 45px;
+  height: 45px;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  cursor: pointer;
+  border-radius: 8px;
+
+  margin-bottom: 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+}
+
+.toggleBtn:hover {
+  background: #1d4ed8;
+}
+
+/* INPUTS */
+
+.sidebar input {
+  width: 100%;
+  margin-bottom: 1rem;
+
+  padding: 0.8rem 1rem;
+
+  border: 1px solid #374151;
+  border-radius: 8px;
+
+  background: #1f2937;
+  color: white;
+
+  outline: none;
+  box-sizing: border-box;
+}
+
+.sidebar input::placeholder {
+  color: #9ca3af;
+}
+
+.sidebar input:focus {
+  border-color: #3b82f6;
+}
+
+/* APPLY FILTER BUTTON */
+
+.sidebar button:last-child {
+  width: 100%;
+
+  padding: 0.85rem;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #10b981;
+  color: white;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.sidebar button:last-child:hover {
+  background: #059669;
+}
+
+/* MAIN CONTENT */
+
+.main {
+  flex: 1;
+  padding: 2rem;
+}
+
+.main h1 {
+  margin-bottom: 1.5rem;
+  color: #111827;
+}
+
+/* BOOKINGS */
+
+.bookingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
+}
+
+.card {
+  background: white;
+  padding: 1.2rem;
+
+  border-radius: 12px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  border: 1px solid #e5e7eb;
+
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card p {
+  margin-bottom: 0.7rem;
+  color: #374151;
+  word-break: break-word;
+}
+
+.card strong {
+  color: #111827;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    border-right: none;
+    border-bottom: 1px solid #374151;
+  }
+
+  .main {
+    padding: 1rem;
+  }
+}

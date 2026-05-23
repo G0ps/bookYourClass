@@ -1,4 +1,4 @@
-import venueRepository from "../repositories/venueRepository.js";
+import bookingRepository from "../repositories/bookingRepository.js";
 
 export const requestVenue = async (req, res) => {
   try {
@@ -36,7 +36,7 @@ export const requestVenue = async (req, res) => {
     }
 
     const staffExists =
-      await venueRepository.verifyStaffId(
+      await bookingRepository.verifyStaffId(
         staffId
       );
 
@@ -48,7 +48,7 @@ export const requestVenue = async (req, res) => {
     }
 
     const venueExists =
-      await venueRepository.verifyVenueId(
+      await bookingRepository.verifyVenueId(
         venueId
       );
 
@@ -67,7 +67,7 @@ export const requestVenue = async (req, res) => {
     };
 
     const response =
-      await venueRepository.insertNewBooking(
+      await bookingRepository.insertNewBooking(
         data
       );
 
@@ -152,6 +152,38 @@ export const patchBooking = async (
     return res.status(500).json({
       status: "error",
       message: error.message,
+    });
+  }
+};
+
+
+export const getAllBookingsByEmail = async (req, res) => {
+  try {
+    const { email, venueId, startDate, endDate } = req.query;
+
+    
+    const response =
+    await bookingRepository.fetchBookingsWithFilters({
+        email,
+        venueId,
+        startDate,
+        endDate,
+      });
+
+    if (response.status === "error") {
+      console.log("error : " , response)
+      return res.status(500).json(response);
+    }
+    
+    return res.status(200).json({
+      status: "success",
+      bookings: response.bookings,
+    });
+  } catch (error) {
+    console.log("error" , error);
+    return res.status(500).json({
+      status: "error",
+      error,
     });
   }
 };

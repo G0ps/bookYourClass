@@ -34,7 +34,7 @@ export default function Login() {
         const data = await response.json();
 
         if (response.ok && data.success) {
-          navigate("/admin/dashboard");
+          navigate("/admin");
         }
       } catch (error) {
         console.log(error);
@@ -76,7 +76,12 @@ export default function Login() {
         throw new Error(data.message || "Login failed");
       }
 
-      navigate("/admin/dashboard");
+       const role = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("role="))
+        ?.split("=")[1];
+
+      navigate(`/${role}`);
     } catch (error) {
       setMessage(error.message);
     } finally {

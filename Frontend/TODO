@@ -1,2 +1,18 @@
-* write UI , for admin and use {children} prop
-* create proper fallback and auto login with token facility and fallback if token invalidated anywhere.
+* create proper fallback and auto login with fallback if token invalidated anywhere.
+
+* create admin dashboard . 
+    * user management with search and filter
+    * venue management with search and filter
+    * booking management with search and filter
+
+* create staff dashboard 
+    * booking management with filter
+    * home -> searching and filtering option and pagination
+
+* student . "for now only mail"
+
+
+[
+    problems :
+    * the jwt tokkens are set in cookies as not "only http". and it made room for possibbility of theft of a token
+]
