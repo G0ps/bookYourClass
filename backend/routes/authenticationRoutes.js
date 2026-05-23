@@ -1,6 +1,6 @@
 import express from "express";
 
-import { login, register } from "../controllers/authenticationController.js";
+import { login, logout, register } from "../controllers/authenticationController.js";
 
 import autherizationMiddleware from "../middlewares/autherizationMiddleware.js";
 import jwtAutoLoginAttempt from "../middlewares/jwtAutoLoginAttempt.js";
@@ -13,5 +13,6 @@ authRoutes.post(
   jwtAutoLoginAttempt,
   login
 );
+authRoutes.post("/logout" , logout)
 
 export default authRoutes;

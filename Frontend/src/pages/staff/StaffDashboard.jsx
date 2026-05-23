@@ -5,24 +5,30 @@ import { useState } from "react";
 
 import styles from "./StaffDashboard.module.css";
 
+import { ENDPOINTS } from "../../endpoints";
+
 export default function StaffDashboard() {
   const navigate = useNavigate();
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const handleLogout = () => {
-    document.cookie.split(";").forEach((cookie) => {
-      const cookieName = cookie.split("=")[0].trim();
+  const handleLogout = async () => {
+    try {
+      await fetch(ENDPOINTS.AUTHENTICATION.LOGOUT, {
+        method: "POST",
+        credentials: "include",
+      }).then(data => {
+        localStorage.clear();
+        sessionStorage.clear();
 
-      document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    });
+        window.history.replaceState(null, "", "/");
 
-    localStorage.clear();
-    sessionStorage.clear();
-
-    window.history.replaceState(null, "", "/");
-
-    navigate("/", { replace: true });
+        navigate("/", { replace: true });
+        return;
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

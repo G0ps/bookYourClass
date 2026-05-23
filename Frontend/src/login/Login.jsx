@@ -15,7 +15,28 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Auto login attempt
+  const safeRedirect = (role) => {
+    console.log("safe redirect role : " , role)
+    if (!role || role === "null" || role === "undefined") {
+      localStorage.removeItem("role");
+      navigate("/");
+      return;
+    }
+
+    localStorage.setItem("role", role);
+    navigate(`/${role}`);
+  };
+
+  const handleResponse = (data) => {
+    if (data?.status === "success" && data.role) {
+      safeRedirect(data.role);
+    } else {
+      localStorage.removeItem("role");
+      navigate("/");
+    }
+  };
+
+  // AUTO LOGIN
   useEffect(() => {
     const autoLogin = async () => {
       try {
@@ -32,20 +53,13 @@ export default function Login() {
         );
 
         const data = await response.json();
+        console.log("data received auto log in : " , data);
 
-        // alert("data received : " , response);
-
-        const role = data.role
-        localStorage.setItem("role", role);
-
-        if (response.ok && data.success && role !== undefined) {
-          navigate(`/${role}`);
-        }
-        else{
-          navigate("/");
-        }
+        handleResponse(data);
       } catch (error) {
         console.log(error);
+        localStorage.removeItem("role");
+        navigate("/");
       }
     };
 
@@ -53,8 +67,8 @@ export default function Login() {
   }, [navigate]);
 
   const handleChange = (event) => {
-    setFormData((previous) => ({
-      ...previous,
+    setFormData((prev) => ({
+      ...prev,
       [event.target.name]: event.target.value,
     }));
   };
@@ -80,18 +94,13 @@ export default function Login() {
 
       const data = await response.json();
 
+      console.log("data received : " , data);
+
       if (!response.ok) {
         throw new Error(data.message || "Login failed");
       }
 
-       const role = data.role
-       localStorage.setItem("role", role);
-
-        // alert("response received : " , response);
-
-      if(!role) navigate("/");
-
-      navigate(`/${role}`);
+      handleResponse(data);
     } catch (error) {
       setMessage(error.message);
     } finally {
@@ -106,11 +115,9 @@ export default function Login() {
 
         <div className={styles.inputGroup}>
           <label>Email</label>
-
           <input
             type="email"
             name="email"
-            placeholder="Enter email"
             value={formData.email}
             onChange={handleChange}
             required
@@ -119,11 +126,9 @@ export default function Login() {
 
         <div className={styles.inputGroup}>
           <label>Password</label>
-
           <input
             type="password"
             name="password"
-            placeholder="Enter password"
             value={formData.password}
             onChange={handleChange}
             required
@@ -134,11 +139,7 @@ export default function Login() {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {message && (
-          <p className={styles.message}>
-            {message}
-          </p>
-        )}
+        {message && <p className={styles.message}>{message}</p>}
       </form>
     </div>
   );

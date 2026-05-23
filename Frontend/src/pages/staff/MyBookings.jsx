@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./MyBookings.module.css";
 
+import { ENDPOINTS } from "../../endpoints";
+
 export default function MyBookings() {
   const navigate = useNavigate();
 
@@ -43,7 +45,7 @@ export default function MyBookings() {
       });
 
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/booking?${query.toString()}`,
+        `ENDPOINTS.BOOKING.POST?${query.toString()}`,
         {
           method: "GET",
           credentials: "include",

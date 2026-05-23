@@ -57,9 +57,10 @@ export const register = async (req , res) => {
 export const login = async(req , res) => {
     if (req.isAuthenticated) {
         return res.status(200).json({
-            success: true,
+            status: "success",
             message: "Already logged in",
             user: req.user,
+            role : req.user.role
         });
     }
 
@@ -106,3 +107,23 @@ export const login = async(req , res) => {
         return res.status(500).json({status : "error" , message : error.message});
     }
 }
+
+export const logout = async (req, res) => {
+  try {
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      path: "/",
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
