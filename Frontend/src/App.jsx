@@ -4,8 +4,12 @@ import Login from "./login/Login.jsx";
 
 import RoleProtectedRoutes from "./routes/RoleProtectedRoutes.jsx";
 
+//Admin
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+
+//staff 
 import StaffDashboard from "./pages/staff/StaffDashboard.jsx";
+import MyBookings from "./pages/staff/MyBookings.jsx";
 
 export default function App() {
   return (
@@ -23,6 +27,7 @@ export default function App() {
           }
         />
 
+        {/*staff routes*/}
         <Route
           path="/staff"
           element={
@@ -31,6 +36,10 @@ export default function App() {
             </RoleProtectedRoutes>
           }
         />
+        <Route
+            path="/staff/myBookings"
+            element={<MyBookings />}
+          />
 
       </Routes>
     </BrowserRouter>

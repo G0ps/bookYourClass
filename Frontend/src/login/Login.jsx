@@ -33,8 +33,18 @@ export default function Login() {
 
         const data = await response.json();
 
-        if (response.ok && data.success) {
-          navigate("/admin");
+        // alert("data received : " , response);
+
+        const role = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("role="))
+          ?.split("=")[1];
+
+        if (response.ok && data.success && role !== undefined) {
+          navigate(`/${role}`);
+        }
+        else{
+          navigate("/");
         }
       } catch (error) {
         console.log(error);
@@ -80,6 +90,10 @@ export default function Login() {
         .split("; ")
         .find((row) => row.startsWith("role="))
         ?.split("=")[1];
+
+        // alert("response received : " , response);
+
+      if(!role) navigate("/");
 
       navigate(`/${role}`);
     } catch (error) {

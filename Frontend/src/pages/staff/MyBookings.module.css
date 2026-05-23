@@ -1,0 +1,73 @@
+/* src/pages/staff/MyBookings.module.css */
+
+.container {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+  color: #111827;
+}
+
+.filterContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 1rem;
+
+  margin-bottom: 2rem;
+}
+
+.filterContainer input {
+  padding: 0.9rem 1rem;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  outline: none;
+}
+
+.filterContainer input:focus {
+  border-color: #2563eb;
+}
+
+.filterContainer button {
+  border: none;
+
+  border-radius: 8px;
+
+  background: #10b981;
+  color: white;
+
+  padding: 0.9rem 1rem;
+
+  cursor: pointer;
+}
+
+.bookingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+
+  gap: 1.2rem;
+}
+
+.card {
+  background: white;
+
+  padding: 1.2rem;
+
+  border-radius: 12px;
+
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card p {
+  margin-bottom: 0.8rem;
+  color: #374151;
+}
+
+.card strong {
+  color: #111827;
+}
