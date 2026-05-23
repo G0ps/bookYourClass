@@ -29,6 +29,17 @@ export const getUsers = async ({
           $options: "i",
         },
       },
+      {
+        contactNumber: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        _id: search.match(/^[0-9a-fA-F]{24}$/)
+          ? search
+          : null,
+      },
     ];
   }
 
@@ -38,10 +49,12 @@ export const getUsers = async ({
     .find(query)
     .skip(skip)
     .limit(limit)
-    .sort({ createdAt: -1 });
+    .sort({ name: 1 });
 
   const totalUsers =
-    await userModel.countDocuments(query);
+    await userModel.countDocuments(
+      query
+    );
 
   return {
     status: "success",

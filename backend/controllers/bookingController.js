@@ -159,16 +159,24 @@ export const patchBooking = async (
 
 export const getAllBookingsByEmail = async (req, res) => {
   try {
-    const { email, venueId, startDate, endDate } = req.query;
+    const {
+      venueId,
+      staffId,
+      startDate,
+      endDate,
+      status,
+    } = req.query;
 
-    
     const response =
-    await bookingRepository.fetchBookingsWithFilters({
-        email,
-        venueId,
-        startDate,
-        endDate,
-      });
+      await bookingRepository.fetchBookingsWithFilters(
+        {
+          venueId,
+          staffId,
+          startDate,
+          endDate,
+          status,
+        }
+      );
 
     if (response.status === "error") {
       console.log("error : " , response)

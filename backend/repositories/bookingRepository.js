@@ -152,44 +152,44 @@ const fetchBookingsByDates = async (startDate, endDate) => {
 };
 
 const fetchBookingsWithFilters = async ({
-  email,
   venueId,
+  staffId,
   startDate,
   endDate,
+  status,
 }) => {
   try {
     const query = {};
-
-    if (email) {
-      const user = await userModel.findOne({ email });
-
-      if (!user) {
-        return {
-          status: "success",
-          bookings: [],
-        };
-      }
-
-      query.userId = user._id;
-    }
 
     if (venueId) {
       query.venueId = venueId;
     }
 
-    if (startDate || endDate) {
-      query.startDate = {};
-
-      if (startDate) {
-        query.startDate.$gte = new Date(startDate);
-      }
-
-      if (endDate) {
-        query.startDate.$lte = new Date(endDate);
-      }
+    if (staffId) {
+      query.staffId = staffId;
     }
 
-    const bookings = await bookingModel.find(query);
+    if (status) {
+      query.status = status;
+    }
+
+    if (startDate && endDate) {
+      query.$and = [
+        {
+          startDate: {
+            $lte: new Date(endDate),
+          },
+        },
+        {
+          endDate: {
+            $gte: new Date(startDate),
+          },
+        },
+      ];
+    }
+
+    const bookings =
+      await bookingModel.find(query);
 
     return {
       status: "success",

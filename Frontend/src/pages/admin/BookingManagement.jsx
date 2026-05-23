@@ -3,30 +3,43 @@ import styles from "./BookingManagement.module.css";
 import { ENDPOINTS } from "../../endpoints";
 
 export default function BookingManagement() {
-  const [bookings, setBookings] = useState([]);
-  const [filters, setFilters] = useState({
-    email: "",
-    venueId: "",
-    startDate: "",
-    endDate: "",
-  });
+  const [bookings, setBookings] =
+    useState([]);
 
-  // FETCH BOOKINGS
+  const [tab, setTab] =
+    useState("pending");
+
+  const [filters, setFilters] =
+    useState({
+      venueId: "",
+      staffId: "",
+      startDate: "",
+      endDate: "",
+      status: "",
+    });
+
   const fetchBookings = async () => {
     try {
-      const query = new URLSearchParams();
+      const query =
+        new URLSearchParams();
 
-      if (filters.email) query.append("email", filters.email);
-      if (filters.venueId) query.append("venueId", filters.venueId);
-      if (filters.startDate) query.append("startDate", filters.startDate);
-      if (filters.endDate) query.append("endDate", filters.endDate);
+      Object.entries(filters).forEach(
+        ([key, value]) => {
+          if (value) {
+            query.append(key, value);
+          }
+        }
+      );
 
       const res = await fetch(
         `${ENDPOINTS.BOOKING.GET}?${query.toString()}`,
-        { credentials: "include" }
+        {
+          credentials: "include",
+        }
       );
 
       const data = await res.json();
+
       setBookings(data.bookings || []);
     } catch (err) {
       console.error(err);
@@ -37,15 +50,25 @@ export default function BookingManagement() {
     fetchBookings();
   }, []);
 
-  // PATCH BOOKING (example: status update or partial update)
-  const updateBooking = async (bookingId, updateData) => {
+  const updateBooking = async (
+    bookingId,
+    status
+  ) => {
     try {
-      await fetch(`${ENDPOINTS.BOOKING.PATCH}?bookingId=${bookingId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(updateData),
-      });
+      await fetch(
+        `${ENDPOINTS.BOOKING.PATCH}/${bookingId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            status,
+          }),
+        }
+      );
 
       fetchBookings();
     } catch (err) {
@@ -53,84 +76,235 @@ export default function BookingManagement() {
     }
   };
 
+  const filteredBookings =
+    bookings.filter((b) => {
+      if (tab === "accepted") {
+        return b.status === "complete";
+      }
+
+      if (tab === "rejected") {
+        return b.status === "rejected";
+      }
+
+      return b.status === "pending";
+    });
+
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Booking Management</h2>
+      <h1 className={styles.heading}>
+        Booking Management
+      </h1>
 
-      {/* FILTERS */}
-      <div className={styles.filters}>
-        <input
-          placeholder="Email"
-          value={filters.email}
-          onChange={(e) =>
-            setFilters({ ...filters, email: e.target.value })
-          }
-        />
-
+      <div className={styles.filterBox}>
         <input
           placeholder="Venue ID"
           value={filters.venueId}
           onChange={(e) =>
-            setFilters({ ...filters, venueId: e.target.value })
+            setFilters({
+              ...filters,
+              venueId: e.target.value,
+            })
           }
+          className={styles.input}
         />
 
         <input
-          type="date"
+          placeholder="Staff ID"
+          value={filters.staffId}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              staffId: e.target.value,
+            })
+          }
+          className={styles.input}
+        />
+
+        <input
+          type="datetime-local"
           value={filters.startDate}
           onChange={(e) =>
-            setFilters({ ...filters, startDate: e.target.value })
+            setFilters({
+              ...filters,
+              startDate:
+                e.target.value,
+            })
           }
+          className={styles.input}
         />
 
         <input
-          type="date"
+          type="datetime-local"
           value={filters.endDate}
           onChange={(e) =>
-            setFilters({ ...filters, endDate: e.target.value })
+            setFilters({
+              ...filters,
+              endDate:
+                e.target.value,
+            })
           }
+          className={styles.input}
         />
 
-        <button onClick={fetchBookings}>Search</button>
+        <select
+          value={filters.status}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              status: e.target.value,
+            })
+          }
+          className={styles.input}
+        >
+          <option value="">
+            All Status
+          </option>
+
+          <option value="pending">
+            Pending
+          </option>
+
+          <option value="complete">
+            Complete
+          </option>
+
+          <option value="rejected">
+            Rejected
+          </option>
+
+          <option value="invalid">
+            Invalid
+          </option>
+
+          <option value="canceled">
+            Canceled
+          </option>
+        </select>
+
+        <button
+          onClick={fetchBookings}
+          className={styles.searchBtn}
+        >
+          Search
+        </button>
       </div>
 
-      {/* BOOKINGS LIST */}
-      <div className={styles.list}>
-        {bookings.map((b) => (
-          <div key={b._id} className={styles.card}>
+      <div className={styles.toggleBar}>
+        <button
+          className={
+            tab === "pending"
+              ? styles.activeTab
+              : ""
+          }
+          onClick={() =>
+            setTab("pending")
+          }
+        >
+          Pending
+        </button>
+
+        <button
+          className={
+            tab === "accepted"
+              ? styles.activeTab
+              : ""
+          }
+          onClick={() =>
+            setTab("accepted")
+          }
+        >
+          Accepted
+        </button>
+
+        <button
+          className={
+            tab === "rejected"
+              ? styles.activeTab
+              : ""
+          }
+          onClick={() =>
+            setTab("rejected")
+          }
+        >
+          Rejected
+        </button>
+      </div>
+
+      <div className={styles.bookingSection}>
+        {filteredBookings.map((b) => (
+          <div
+            key={b._id}
+            className={styles.card}
+          >
             <div>
-              <strong>Venue:</strong> {b.venueId}
-            </div>
-            <div>
-              <strong>Staff:</strong> {b.staffId}
-            </div>
-            <div>
-              <strong>Start:</strong>{" "}
-              {new Date(b.startDate).toLocaleString()}
-            </div>
-            <div>
-              <strong>End:</strong>{" "}
-              {new Date(b.endDate).toLocaleString()}
+              <span>Booking ID:</span>{" "}
+              {b._id}
             </div>
 
-            {/* EXAMPLE ADMIN ACTION */}
-            <div className={styles.actions}>
-              <button
-                onClick={() =>
-                  updateBooking(b._id, { status: "approved" })
-                }
-              >
-                Approve
-              </button>
-
-              <button
-                onClick={() =>
-                  updateBooking(b._id, { status: "rejected" })
-                }
-              >
-                Reject
-              </button>
+            <div>
+              <span>Venue ID:</span>{" "}
+              {b.venueId}
             </div>
+
+            <div>
+              <span>Staff ID:</span>{" "}
+              {b.staffId}
+            </div>
+
+            <div>
+              <span>Status:</span>{" "}
+              {b.status}
+            </div>
+
+            <div>
+              <span>Start:</span>{" "}
+              {new Date(
+                b.startDate
+              ).toLocaleString()}
+            </div>
+
+            <div>
+              <span>End:</span>{" "}
+              {new Date(
+                b.endDate
+              ).toLocaleString()}
+            </div>
+
+            {b.status === "pending" && (
+              <div
+                className={
+                  styles.actions
+                }
+              >
+                <button
+                  className={
+                    styles.acceptBtn
+                  }
+                  onClick={() =>
+                    updateBooking(
+                      b._id,
+                      "complete"
+                    )
+                  }
+                >
+                  Accept
+                </button>
+
+                <button
+                  className={
+                    styles.rejectBtn
+                  }
+                  onClick={() =>
+                    updateBooking(
+                      b._id,
+                      "rejected"
+                    )
+                  }
+                >
+                  Reject
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -7,7 +7,14 @@ import { requestVenue , patchBooking, getAllBookingsByEmail } from "../controlle
 const bookingRoutes = express.Router();
 
 bookingRoutes.post("/" , autherizationMiddleware("admin" , "staff") , requestVenue);
-bookingRoutes.patch("/" , autherizationMiddleware("admin" , "staff") , patchBooking);
+bookingRoutes.patch(
+  "/:bookingId",
+  autherizationMiddleware(
+    "admin",
+    "staff"
+  ),
+  patchBooking
+);
 
 bookingRoutes.get("/" , autherizationMiddleware("admin" , "staff") , getAllBookingsByEmail)
 
