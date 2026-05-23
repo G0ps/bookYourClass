@@ -1,5 +1,4 @@
-* set the role by getting as a response from backend instead of cookies as it is async. (thereby it eradicates problem_1)
-* create proper fallback and auto login with fallback if token invalidated anywhere.
+* create fallback if token invalidated anywhere.
 
 * create admin dashboard . 
     * user management with search and filter
@@ -15,5 +14,4 @@
 
 [
     problems :
-    problem_1 - the jwt tokkens are set in cookies as not "only http". and it made room for possibbility of theft of a token
 ]
