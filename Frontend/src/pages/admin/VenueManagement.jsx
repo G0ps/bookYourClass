@@ -12,7 +12,8 @@ export default function VenueManagement() {
           credentials: "include",
         });
         const data = await res.json();
-        setVenues(data);
+        console.log("venue : dta : " , data);
+        setVenues(data.venues);
       } catch (err) {
         console.error(err);
       }
@@ -26,7 +27,7 @@ export default function VenueManagement() {
       <h2 className={styles.title}>Venue Management</h2>
 
       <div className={styles.table}>
-        {venues.map((v) => (
+        {(venues || venues.length > 0) && venues.map((v) => (
           <div key={v._id} className={styles.row}>
             <div>{v.name}</div>
             <div>{v.block}</div>

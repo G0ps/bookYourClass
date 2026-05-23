@@ -39,7 +39,7 @@ venueRoutes.patch(
 // get venues // pagination
 venueRoutes.get(
   "/",
-  (req , res) => {return res.json({status : "placeholder needing pagination"})}
+  (req , res) => {return res.json({status : "success" , venues : []})}
 );
 
 export default venueRoutes;

@@ -11,17 +11,17 @@ export const ENDPOINTS = {
   },
 
   USER: {
-    GET: `${BASE_URL}/users`,
-    PATCH: `${BASE_URL}/users`,
-    DELETE: `${BASE_URL}/users`,
+    GET: `${BASE_URL}/user`,
+    PATCH: `${BASE_URL}/user`,
+    DELETE: `${BASE_URL}/user`,
   },
 
   VENUE: {
-    GET: `${BASE_URL}/venues`,
-    POST: `${BASE_URL}/venues/add`,
-    PATCH: (id) => `${BASE_URL}/venues/${id}`,
-    PUT: (id) => `${BASE_URL}/venues/${id}`,
-    DELETE: (id) => `${BASE_URL}/venues/${id}`,
+    GET: `${BASE_URL}/venue`,
+    POST: `${BASE_URL}/venue/add`,
+    PATCH: (id) => `${BASE_URL}/venue/${id}`,
+    PUT: (id) => `${BASE_URL}/venue/${id}`,
+    DELETE: (id) => `${BASE_URL}/venue/${id}`,
   },
   BOOKING: {
     GET: `${BASE_URL}/booking`,

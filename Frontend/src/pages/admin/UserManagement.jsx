@@ -12,7 +12,8 @@ export default function UserManagement() {
           credentials: "include",
         });
         const data = await res.json();
-        setUsers(data);
+        setUsers(data.users);
+        // console.log("users : " , data)
       } catch (err) {
         console.error(err);
       }
@@ -26,7 +27,7 @@ export default function UserManagement() {
       <h2 className={styles.title}>User Management</h2>
 
       <div className={styles.table}>
-        {users.map((user) => (
+        {(users || users.length > 0) && users.map((user) => (
           <div key={user._id} className={styles.row}>
             <div>{user.name}</div>
             <div>{user.email}</div>

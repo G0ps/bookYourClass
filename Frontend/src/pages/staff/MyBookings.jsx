@@ -19,13 +19,28 @@ export default function MyBookings() {
     endDate: "",
   });
 
+  const handleLogout = async () => {
+    try {
+      await fetch(ENDPOINTS.AUTHENTICATION.LOGOUT, {
+        method: "POST",
+        credentials: "include",
+      }).then(data => {
+        localStorage.clear();
+        sessionStorage.clear();
+
+        window.history.replaceState(null, "", "/");
+
+        navigate("/", { replace: true });
+        return;
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleUnauthorizedAccess = () => {
-    document.cookie.split(";").forEach((cookie) => {
-      const cookieName = cookie.split("=")[0].trim();
-
-      document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    });
-
+    
+    handleLogout();
     localStorage.clear();
     sessionStorage.clear();
 
@@ -45,7 +60,7 @@ export default function MyBookings() {
       });
 
       const response = await fetch(
-        `ENDPOINTS.BOOKING.POST?${query.toString()}`,
+        `${ENDPOINTS.BOOKING.GET}?${query.toString()}`,
         {
           method: "GET",
           credentials: "include",
@@ -61,6 +76,7 @@ export default function MyBookings() {
       }
 
       const data = await response.json();
+      console.log("data my bookings : " , data)
 
       if (
         data.status === "unauthorized" ||
