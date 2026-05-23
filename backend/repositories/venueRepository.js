@@ -94,10 +94,71 @@ const deleteVenueById = async (venueId) => {
   }
 };
 
+export const getVenues = async ({
+  page,
+  limit,
+  block,
+  search,
+}) => {
+  const query = {};
+
+  if (block) {
+    query.block = block;
+  }
+
+  if (search) {
+    query.$or = [
+      {
+        name: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        block: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+    ];
+  }
+
+  const skip = (page - 1) * limit;
+
+  const venues = await venueModel
+    .find(query)
+    .populate(
+      "inchargeIds",
+      "name email"
+    )
+    .skip(skip)
+    .limit(limit)
+    .sort({ name: 1 });
+
+  const totalVenues =
+    await venueModel.countDocuments(
+      query
+    );
+
+  return {
+    status: "success",
+    venues,
+    pagination: {
+      currentPage: page,
+      totalPages: Math.ceil(
+        totalVenues / limit
+      ),
+      totalVenues,
+      limit,
+    },
+  };
+};
+
 export default {
   insertNewVenue,
   verifyStaffIds,
   updateVenuePatch,
   replaceVenuePut,
   deleteVenueById,
+  getVenues,
 };

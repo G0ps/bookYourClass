@@ -161,3 +161,32 @@ export const deleteVenue = async (req, res) => {
     });
   }
 };
+
+export const getVenues = async (
+  req,
+  res
+) => {
+  try {
+    const {
+      page = 1,
+      limit = 10,
+      block,
+      search,
+    } = req.query;
+
+    const response =
+      await venueRepository.getVenues({
+        page: Number(page),
+        limit: Number(limit),
+        block,
+        search,
+      });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};

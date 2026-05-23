@@ -9,7 +9,7 @@ const assign_token = (res , user) => {
         },
         process.env.JWT_SECRET,
         {
-            expiresIn: "2m",
+            expiresIn: "30m",
         }
     );
     res.cookie("token", token, {

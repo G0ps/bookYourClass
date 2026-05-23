@@ -1,12 +1,12 @@
-* create fallback if token invalidated anywhere.
+* create fallback if token invalidated anywhere. for admindashboard
 
 * create admin dashboard . 
     * user management with search and filter
     * venue management with search and filter
-    * booking management with search and filter
+    * booking with search and filter
 
 * create staff dashboard 
-    * booking management with filter // almost done
+    * booking filter // almost done
     * home -> searching and filtering option and pagination
 
 * student . "for now only mail"
@@ -14,4 +14,9 @@
 
 [
     problems :
+]
+
+[
+    mistakes to correct in future 
+    point_1 : must bihard a standard format of sending and receiving request and response respectively . "more time is wasted in figuring out what came and why error"
 ]

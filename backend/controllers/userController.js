@@ -1,14 +1,20 @@
 import userRepository from "../repositories/userRepository.js";
 
-export const getUsers = async (
-  req,
-  res
-) => {
+export const getUsers = async (req, res) => {
   try {
-    const response =
-      await userRepository.getUsers();
+    const {
+      page = 1,
+      limit = 10,
+      typeOfUser,
+      search,
+    } = req.query;
 
-      // console.log("response:  " , response)
+    const response = await userRepository.getUsers({
+      page: Number(page),
+      limit: Number(limit),
+      typeOfUser,
+      search,
+    });
 
     return res.status(200).json(response);
   } catch (error) {

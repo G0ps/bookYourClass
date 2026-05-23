@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import styles from "./AdminDashboard.module.css";
 import UserManagement from "./UserManagement.jsx";
 import VenueManagement from "./VenueManagement.jsx";
@@ -5,7 +7,12 @@ import BookingManagement from "./BookingManagement.jsx";
 
 import { ENDPOINTS } from "../../endpoints";
 
-const handleLogout = async () => {
+
+export default function AdminDashboard() {
+
+  const navigate = useNavigate();
+  
+  const handleLogout = async () => {
     try {
       await fetch(ENDPOINTS.AUTHENTICATION.LOGOUT, {
         method: "POST",
@@ -24,7 +31,6 @@ const handleLogout = async () => {
     }
   };
 
-export default function AdminDashboard() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Admin Dashboard</h1>

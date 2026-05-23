@@ -3,20 +3,58 @@ import mainModel from "./models/mainModel.js";
 const userModel = mainModel.userModel;
 const bookingModel = mainModel.bookingModel;
 
-const getUsers = async () => {
-  try {
-    const users = await userModel.find();
+export const getUsers = async ({
+  page,
+  limit,
+  typeOfUser,
+  search,
+}) => {
+  const query = {};
 
-    return {
-      status: "success",
-      users,
-    };
-  } catch (error) {
-    return {
-      status: "error",
-      error,
-    };
+  if (typeOfUser) {
+    query.typeOfUser = typeOfUser;
   }
+
+  if (search) {
+    query.$or = [
+      {
+        name: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        email: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+    ];
+  }
+
+  const skip = (page - 1) * limit;
+
+  const users = await userModel
+    .find(query)
+    .skip(skip)
+    .limit(limit)
+    .sort({ createdAt: -1 });
+
+  const totalUsers =
+    await userModel.countDocuments(query);
+
+  return {
+    status: "success",
+    users,
+    pagination: {
+      currentPage: page,
+      totalPages: Math.ceil(
+        totalUsers / limit
+      ),
+      totalUsers,
+      limit,
+    },
+  };
 };
 
 const patchUser = async (userId, data) => {
