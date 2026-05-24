@@ -19,7 +19,6 @@ export default function Login() {
     console.log("safe redirect role : " , role)
     if (!role || role === "null" || role === "undefined") {
       localStorage.removeItem("role");
-      navigate("/");
       return;
     }
 
@@ -32,7 +31,6 @@ export default function Login() {
       safeRedirect(data.role);
     } else {
       localStorage.removeItem("role");
-      navigate("/");
     }
   };
 
@@ -59,7 +57,6 @@ export default function Login() {
       } catch (error) {
         console.log(error);
         localStorage.removeItem("role");
-        navigate("/");
       }
     };
 
