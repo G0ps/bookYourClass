@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "6a0f258f8f2e2b8359b12a91"
+  },
+  "name": "gopinath",
+  "email": "gopinathshanmugavel@gmail.com",
+  "contactNumber": "9344848312",
+  "password": "12345",
+  "typeOfUser": "admin",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a0f31475d4a684d2f0599ab"
+  },
+  "name": "selvi",
+  "email": "selvishanmugavel@gmail.com",
+  "contactNumber": "9500283757",
+  "password": "12345",
+  "typeOfUser": "staff",
+  "__v": 0
+}]

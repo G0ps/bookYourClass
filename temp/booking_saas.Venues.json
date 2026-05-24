@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "6650a1b2c3d4e5f678901111"
+  },
+  "name": "Main Auditorium",
+  "block": "A Block",
+  "inchargeIds": [
+    {
+      "$oid": "6a0f258f8f2e2b8359b12a91"
+    }
+  ],
+  "capacity": 500
+},
+{
+  "_id": {
+    "$oid": "6650a1b2c3d4e5f678901112"
+  },
+  "name": "Seminar Hall 1",
+  "block": "B Block",
+  "inchargeIds": [
+    {
+      "$oid": "6a0f258f8f2e2b8359b12a91"
+    }
+  ],
+  "capacity": 150
+},
+{
+  "_id": {
+    "$oid": "6650a1b2c3d4e5f678901113"
+  },
+  "name": "Conference Room",
+  "block": "C Block",
+  "inchargeIds": [
+    {
+      "$oid": "6a0f31475d4a684d2f0599ab"
+    }
+  ],
+  "capacity": 80
+}]
