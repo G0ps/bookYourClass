@@ -6,10 +6,6 @@ export const ENDPOINTS = {
     LOGOUT: `${BASE_URL}/authentication/logout`,
   },
 
-  BOOKING: {
-    POST: `${BASE_URL}/booking`,
-  },
-
   USER: {
     GET: `${BASE_URL}/user`,
     PATCH: `${BASE_URL}/user`,
@@ -26,5 +22,6 @@ export const ENDPOINTS = {
   BOOKING: {
     GET: `${BASE_URL}/booking`,
     PATCH: `${BASE_URL}/booking`,
+    POST: `${BASE_URL}/booking`,
   },
 };

@@ -203,6 +203,43 @@ const fetchBookingsWithFilters = async ({
   }
 };
 
+const checkVenueBookingOverlap = async ({
+  venueId,
+  startDate,
+  endDate,
+}) => {
+  try {
+    const overlappingBookings =
+      await bookingModel.find({
+        venueId,
+        $and: [
+          {
+            startDate: {
+              $lt: new Date(endDate),
+            },
+          },
+          {
+            endDate: {
+              $gt: new Date(startDate),
+            },
+          },
+        ],
+      });
+
+    return {
+      status: "success",
+      overlappingBookings,
+      hasOverlap:
+        overlappingBookings.length > 0,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      error,
+    };
+  }
+};
+
 export default {
   insertNewBooking,
   updateBookingPatch,
@@ -212,4 +249,5 @@ export default {
   fetchBookingsByVenueId,
   fetchBookingsByDates,
   fetchBookingsWithFilters,
+  checkVenueBookingOverlap,
 };

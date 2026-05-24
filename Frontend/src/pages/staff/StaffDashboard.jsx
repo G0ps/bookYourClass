@@ -53,7 +53,7 @@ export default function StaffDashboard() {
 
             <nav className={styles.navLinks}>
               <NavLink
-                to="/staff"
+                to="/staff/home"
                 end
                 className={({ isActive }) =>
                   isActive

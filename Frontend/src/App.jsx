@@ -10,6 +10,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 //staff 
 import StaffDashboard from "./pages/staff/StaffDashboard.jsx";
 import MyBookings from "./pages/staff/MyBookings.jsx";
+import Home from "./pages/staff/Home.jsx";
 
 export default function App() {
   return (
@@ -40,6 +41,14 @@ export default function App() {
             path="/staff/myBookings"
             element={<MyBookings />}
           />
+          <Route
+          path="/staff/home"
+          element={
+            <RoleProtectedRoutes allowedRoles={["staff", "admin"]}>
+              <Home></Home>
+            </RoleProtectedRoutes>
+          }
+        />
 
       </Routes>
     </BrowserRouter>

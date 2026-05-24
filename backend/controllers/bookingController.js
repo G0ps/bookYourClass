@@ -4,10 +4,11 @@ export const requestVenue = async (req, res) => {
   try {
     const {
       venueId,
-      staffId,
       startDate,
       endDate,
-    } = req.body;
+    } = req.body; 
+
+    const staffId = req.user.userId
 
     const missingFields = [];
 
@@ -65,6 +66,33 @@ export const requestVenue = async (req, res) => {
       startDate,
       endDate,
     };
+
+    const overlapResponse =
+      await bookingRepository.checkVenueBookingOverlap(
+        {
+          venueId,
+          startDate,
+          endDate,
+        }
+      );
+
+    if (overlapResponse.hasOverlap) {
+      return res.status(409).json({
+        status: "error",
+        message:
+          "This booking overlaps with an existing booking",
+
+        overlappingBookings:
+          overlapResponse.overlappingBookings.map(
+            (booking) => ({
+              bookingId: booking._id,
+              startDate:
+                booking.startDate,
+              endDate: booking.endDate,
+            })
+          ),
+      });
+    }
 
     const response =
       await bookingRepository.insertNewBooking(

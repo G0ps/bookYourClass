@@ -28,6 +28,19 @@ const assign_token = (res , user) => {
     return;
 }
 
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+
+  if (parts.length === 2) {
+    return parts.pop().split(";").shift();
+  }
+
+  return null;
+};
+
+
+
 const verifyToken = async (token) => {
   return jwt.verify(token, process.env.JWT_SECRET);
 };
