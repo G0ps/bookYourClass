@@ -110,9 +110,11 @@ export const login = async(req , res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.cookie("token", "", {
+
+    res.clearCookie("token", {
       httpOnly: true,
-      expires: new Date(0),
+      secure: true,
+      sameSite: "none",
       path: "/",
     });
 
@@ -120,7 +122,9 @@ export const logout = async (req, res) => {
       success: true,
       message: "Logged out successfully",
     });
+
   } catch (error) {
+
     return res.status(500).json({
       success: false,
       message: error.message,

@@ -24,7 +24,7 @@ export default function App() {
           element={
             <RoleProtectedRoutes allowedRoles={["admin"]}>
               <AdminDashboard />
-            </RoleProtectedRoutes>
+            </RoleProtectedRoutes> 
           }
         />
 

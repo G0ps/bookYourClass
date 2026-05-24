@@ -5,10 +5,7 @@ export default function RoleProtectedRoute({
   allowedRoles,
 }) {
 
-  const role = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("role="))
-    ?.split("=")[1];
+  const role = localStorage.getItem("role")
 
   // Role not allowed
   if (!allowedRoles.includes(role)) {

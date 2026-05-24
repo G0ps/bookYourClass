@@ -6,30 +6,14 @@ import { useState } from "react";
 import styles from "./StaffDashboard.module.css";
 
 import { ENDPOINTS } from "../../endpoints";
+import commonFunctions from "../commonFunctions";
 
 export default function StaffDashboard() {
   const navigate = useNavigate();
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const handleLogout = async () => {
-    try {
-      await fetch(ENDPOINTS.AUTHENTICATION.LOGOUT, {
-        method: "POST",
-        credentials: "include",
-      }).then(data => {
-        localStorage.clear();
-        sessionStorage.clear();
-
-        window.history.replaceState(null, "", "/");
-
-        navigate("/", { replace: true });
-        return;
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const handleLogout = commonFunctions.logout
 
   return (
     <div className={styles.container}>
