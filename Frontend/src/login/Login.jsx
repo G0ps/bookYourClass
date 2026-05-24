@@ -44,7 +44,6 @@ export default function Login() {
       window.location.pathname !==
       targetPath
     ) {
-      console.log("role : check : " , targetPath)
       navigate(targetPath, {
         replace: true,
       });

@@ -13,7 +13,6 @@ export default function StaffDashboard() {
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const handleLogout = commonFunctions.logout
 
   return (
     <div className={styles.container}>
@@ -62,7 +61,11 @@ export default function StaffDashboard() {
 
             <button
               className={styles.logoutBtn}
-              onClick={handleLogout}
+              onClick={() =>
+                commonFunctions.logout(
+                  navigate
+                )
+              }
             >
               Logout
             </button>

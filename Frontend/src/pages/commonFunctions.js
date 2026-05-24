@@ -1,20 +1,34 @@
-const handleLogout = async () => {
-    try {
-      await fetch(ENDPOINTS.AUTHENTICATION.LOGOUT, {
+// commonFunctions.js
+
+import { ENDPOINTS } from "../endpoints";
+
+const logout = async (
+  navigate
+) => {
+
+  try {
+
+    await fetch(
+      ENDPOINTS.AUTHENTICATION.LOGOUT,
+      {
         method: "POST",
         credentials: "include",
-      }).then(data => {
-        localStorage.clear();
-        sessionStorage.clear();
+      }
+    );
 
-        window.history.replaceState(null, "", "/");
+    localStorage.clear();
+    sessionStorage.clear();
 
-        navigate("/", { replace: true });
-        return;
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    navigate("/", {
+      replace: true,
+    });
 
-  export default {handleLogout}
+  } catch (err) {
+
+    console.log(err);
+  }
+};
+
+export default {
+  logout,
+};
