@@ -185,13 +185,53 @@ export const patchBooking = async (
 };
 
 
-export const getAllBookingsByEmail = async (req, res) => {
+export const getAllBookingsOfStaff = async (req, res) => {
   try {
     const {
       venueId,
-      staffId,
       startDate,
       endDate,
+      status,
+    } = req.query;
+
+    const staffId = req.user.userId
+
+    const response =
+      await bookingRepository.fetchBookingsWithFilters(
+        {
+          venueId,
+          staffId,
+          startDate,
+          endDate,
+          status,
+        }
+      );
+
+    if (response.status === "error") {
+      console.log("error : " , response)
+      return res.status(500).json(response);
+    }
+    
+    return res.status(200).json({
+      status: "success",
+      bookings: response.bookings,
+    });
+  } catch (error) {
+    console.log("error" , error);
+    return res.status(500).json({
+      status: "error",
+      error,
+    });
+  }
+};
+
+export const getAllBookingsForAdmin = async (req, res) => {
+  try {
+    const {
+      venueId,
+      startDate,
+      endDate,
+      staffId,
       status,
     } = req.query;
 

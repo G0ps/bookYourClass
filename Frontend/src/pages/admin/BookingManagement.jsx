@@ -32,7 +32,7 @@ export default function BookingManagement() {
       );
 
       const res = await fetch(
-        `${ENDPOINTS.BOOKING.GET}?${query.toString()}`,
+        `${ENDPOINTS.ADMIN.BOOKING.GET}?${query.toString()}`,
         {
           credentials: "include",
         }

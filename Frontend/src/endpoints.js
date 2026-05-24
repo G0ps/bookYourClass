@@ -24,4 +24,11 @@ export const ENDPOINTS = {
     PATCH: `${BASE_URL}/booking`,
     POST: `${BASE_URL}/booking`,
   },
+  ADMIN : {
+    BOOKING :{
+      GET : `${BASE_URL}/booking/admin`,
+      PATCH: `${BASE_URL}/booking`,
+      POST: `${BASE_URL}/booking`,
+    } 
+  }
 };
