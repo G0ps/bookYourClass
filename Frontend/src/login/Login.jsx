@@ -61,7 +61,7 @@ export default function Login() {
     };
 
     autoLogin();
-  }, [navigate]);
+  }, []);
 
   const handleChange = (event) => {
     setFormData((prev) => ({
