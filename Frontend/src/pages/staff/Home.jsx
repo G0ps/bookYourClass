@@ -1,15 +1,13 @@
-// Home.jsx
-
 import {
   useEffect,
   useMemo,
   useState,
 } from "react";
 
+import styles from "./Home.module.css";
 import { ENDPOINTS } from "../../endpoints";
 
 export default function Home() {
-
   const [venues, setVenues] =
     useState([]);
 
@@ -49,39 +47,33 @@ export default function Home() {
     });
 
   const fetchVenues = async () => {
-
     try {
-
       setLoading(true);
 
       const query =
         new URLSearchParams({
           page:
             pagination.currentPage,
-
           limit: 10,
         });
 
-      if (filters.search) {
+      if (filters.search)
         query.append(
           "search",
           filters.search
         );
-      }
 
-      if (filters.block) {
+      if (filters.block)
         query.append(
           "block",
           filters.block
         );
-      }
 
-      if (filters.capacity) {
+      if (filters.capacity)
         query.append(
           "capacity",
           filters.capacity
         );
-      }
 
       const response =
         await fetch(
@@ -99,7 +91,6 @@ export default function Home() {
         data.status ===
         "success"
       ) {
-
         setVenues(
           data.venues || []
         );
@@ -108,27 +99,20 @@ export default function Home() {
           currentPage:
             data.pagination
               ?.currentPage || 1,
-
           totalPages:
             data.pagination
               ?.totalPages || 1,
         });
       }
-
     } catch (error) {
-
       console.log(error);
-
     } finally {
-
       setLoading(false);
     }
   };
 
   useEffect(() => {
-
     fetchVenues();
-
   }, [
     pagination.currentPage,
     filters.search,
@@ -139,7 +123,6 @@ export default function Home() {
   const handleFilterChange = (
     e
   ) => {
-
     setFilters((prev) => ({
       ...prev,
       [e.target.name]:
@@ -149,9 +132,7 @@ export default function Home() {
 
   const openBookingModal =
     async (venue) => {
-
       try {
-
         setSelectedVenue(
           venue
         );
@@ -176,22 +157,18 @@ export default function Home() {
             data.bookings || []
           );
         }
-
       } catch (error) {
-
         console.log(error);
       }
     };
 
   const isDateOverlapping =
     () => {
-
       if (
         !bookingDates.startDate ||
         !bookingDates.endDate
-      ) {
+      )
         return false;
-      }
 
       const start =
         new Date(
@@ -205,7 +182,6 @@ export default function Home() {
 
       return bookedSlots.some(
         (slot) => {
-
           const slotStart =
             new Date(
               slot.startDate
@@ -226,9 +202,7 @@ export default function Home() {
 
   const handleBooking =
     async () => {
-
       try {
-
         if (
           isDateOverlapping()
         ) {
@@ -248,28 +222,22 @@ export default function Home() {
             ENDPOINTS.BOOKING.POST,
             {
               method: "POST",
-
               headers: {
                 "Content-Type":
                   "application/json",
               },
-
               credentials:
                 "include",
-
               body:
                 JSON.stringify({
                   venueId:
                     selectedVenue._id,
-
                   staffId:
                     localStorage.getItem(
                       "userId"
                     ),
-
                   startDate:
                     bookingDates.startDate,
-
                   endDate:
                     bookingDates.endDate,
                 }),
@@ -279,16 +247,10 @@ export default function Home() {
         const data =
           await response.json();
 
-        console.log(
-          "response : ",
-          data
-        );
-
         if (
           data.status ===
           "success"
         ) {
-
           alert(
             "Venue booked"
           );
@@ -303,21 +265,10 @@ export default function Home() {
           });
 
           fetchVenues();
-
-        } else {
-
-          alert(
-            data.message ||
-              "Booking failed"
-          );
         }
-
       } catch (error) {
-
         console.log(error);
-
       } finally {
-
         setBookingLoading(
           false
         );
@@ -325,338 +276,370 @@ export default function Home() {
     };
 
   const overlap = useMemo(
-    () => {
-      return isDateOverlapping();
-    },
+    () =>
+      isDateOverlapping(),
     [bookingDates, bookedSlots]
   );
 
-  return (<div
-      style={{
-        minHeight: "100vh",
-        background: "#f8fafc",
-        padding: "30px",
-      }}
+  return (
+    <div
+      className={
+        styles.container
+      }
     >
-      <h1
-        style={{
-          marginBottom: "25px",
-        }}
+      <div
+        className={
+          styles.hero
+        }
       >
-        Venue Booking
-      </h1>
+        <h1>
+          Campus Venue Booking
+        </h1>
 
-      {/* filters */}
+        <p>
+          Reserve auditoriums,
+          seminar halls and
+          academic spaces with
+          ease.
+        </p>
+      </div>
 
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit,minmax(220px,1fr))",
-          gap: "15px",
-          marginBottom: "30px",
-        }}
+        className={
+          styles.filters
+        }
       >
         <input
-          style={inputStyle}
-          placeholder="Search"
+          className={
+            styles.input
+          }
+          placeholder="Search Venue"
           name="search"
           value={filters.search}
-          onChange={handleFilterChange}
+          onChange={
+            handleFilterChange
+          }
         />
 
         <input
-          style={inputStyle}
+          className={
+            styles.input
+          }
           placeholder="Block"
           name="block"
           value={filters.block}
-          onChange={handleFilterChange}
+          onChange={
+            handleFilterChange
+          }
         />
 
         <input
-          style={inputStyle}
+          className={
+            styles.input
+          }
           placeholder="Capacity"
-          name="capacity"
           type="number"
-          value={filters.capacity}
-          onChange={handleFilterChange}
+          name="capacity"
+          value={
+            filters.capacity
+          }
+          onChange={
+            handleFilterChange
+          }
         />
       </div>
 
-      {/* cards */}
-
       {loading ? (
-        <h2>Loading...</h2>
+        <h2
+          className={
+            styles.loading
+          }
+        >
+          Loading Venues...
+        </h2>
       ) : (
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(320px,1fr))",
-            gap: "20px",
-          }}
+          className={
+            styles.venueGrid
+          }
         >
-          {venues.map((venue) => (
-            <div
-              key={venue._id}
-              style={cardStyle}
-            >
-              <h2>{venue.name}</h2>
-
-              <p>
-                Block : {venue.block}
-              </p>
-
-              <p>
-                Capacity :{" "}
-                {venue.capacity}
-              </p>
-
+          {venues.map(
+            (venue) => (
               <div
-                style={{
-                  marginTop: "10px",
-                }}
-              >
-                {venue.inchargeIds?.map(
-                  (staff) => (
-                    <div
-                      key={staff._id}
-                    >
-                      {staff.name}
-                    </div>
-                  )
-                )}
-              </div>
-
-              <button
-                style={buttonStyle}
-                onClick={() =>
-                  openBookingModal(
-                    venue
-                  )
+                key={
+                  venue._id
+                }
+                className={
+                  styles.card
                 }
               >
-                Book Venue
-              </button>
-            </div>
-          ))}
+                <div
+                  className={
+                    styles.cardHeader
+                  }
+                >
+                  <h2>
+                    {
+                      venue.name
+                    }
+                  </h2>
+
+                  <span
+                    className={
+                      styles.capacityBadge
+                    }
+                  >
+                    {
+                      venue.capacity
+                    }{" "}
+                    Seats
+                  </span>
+                </div>
+
+                <div
+                  className={
+                    styles.meta
+                  }
+                >
+                  📍{" "}
+                  {
+                    venue.block
+                  }
+                </div>
+
+                <div
+                  className={
+                    styles.staffList
+                  }
+                >
+                  {venue.inchargeIds?.map(
+                    (
+                      staff
+                    ) => (
+                      <span
+                        key={
+                          staff._id
+                        }
+                        className={
+                          styles.staffChip
+                        }
+                      >
+                        {
+                          staff.name
+                        }
+                      </span>
+                    )
+                  )}
+                </div>
+
+                <button
+                  className={
+                    styles.primaryBtn
+                  }
+                  onClick={() =>
+                    openBookingModal(
+                      venue
+                    )
+                  }
+                >
+                  Book Venue
+                </button>
+              </div>
+            )
+          )}
         </div>
       )}
 
-      {/* pagination */}
-
       <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "15px",
-          marginTop: "30px",
-        }}
+        className={
+          styles.pagination
+        }
       >
         <button
-          style={buttonStyle}
+          className={
+            styles.primaryBtn
+          }
           disabled={
-            pagination.currentPage === 1
+            pagination.currentPage ===
+            1
           }
           onClick={() =>
-            setPagination((prev) => ({
-              ...prev,
-              currentPage:
-                prev.currentPage - 1,
-            }))
+            setPagination(
+              (
+                prev
+              ) => ({
+                ...prev,
+                currentPage:
+                  prev.currentPage -
+                  1,
+              })
+            )
           }
         >
           Prev
         </button>
 
-        <div>
-          {pagination.currentPage} /{" "}
-          {pagination.totalPages}
-        </div>
+        <span>
+          {
+            pagination.currentPage
+          }{" "}
+          /{" "}
+          {
+            pagination.totalPages
+          }
+        </span>
 
         <button
-          style={buttonStyle}
+          className={
+            styles.primaryBtn
+          }
           disabled={
             pagination.currentPage ===
             pagination.totalPages
           }
           onClick={() =>
-            setPagination((prev) => ({
-              ...prev,
-              currentPage:
-                prev.currentPage + 1,
-            }))
+            setPagination(
+              (
+                prev
+              ) => ({
+                ...prev,
+                currentPage:
+                  prev.currentPage +
+                  1,
+              })
+            )
           }
         >
           Next
         </button>
       </div>
 
-      {/* modal */}
-
       {selectedVenue && (
-        <div style={overlayStyle}>
-          <div style={modalStyle}>
+        <div
+          className={
+            styles.overlay
+          }
+        >
+          <div
+            className={
+              styles.modal
+            }
+          >
             <h2>
-              {selectedVenue.name}
+              {
+                selectedVenue.name
+              }
             </h2>
 
-            <p>
-              Block :{" "}
-              {selectedVenue.block}
-            </p>
+            <input
+              type="datetime-local"
+              className={`${styles.input} ${
+                overlap
+                  ? styles.errorBorder
+                  : ""
+              }`}
+              value={
+                bookingDates.startDate
+              }
+              onChange={(
+                e
+              ) =>
+                setBookingDates(
+                  (
+                    prev
+                  ) => ({
+                    ...prev,
+                    startDate:
+                      e.target
+                        .value,
+                  })
+                )
+              }
+            />
 
-            <p>
-              Capacity :{" "}
-              {selectedVenue.capacity}
-            </p>
+            <input
+              type="datetime-local"
+              className={`${styles.input} ${
+                overlap
+                  ? styles.errorBorder
+                  : ""
+              }`}
+              value={
+                bookingDates.endDate
+              }
+              onChange={(
+                e
+              ) =>
+                setBookingDates(
+                  (
+                    prev
+                  ) => ({
+                    ...prev,
+                    endDate:
+                      e.target
+                        .value,
+                  })
+                )
+              }
+            />
 
-            <div
-              style={{
-                marginTop: "20px",
-              }}
-            >
-              <label>
-                Start Date
-              </label>
-
-              <input
-                type="datetime-local"
-                style={{
-                  ...inputStyle,
-                  border: overlap
-                    ? "2px solid red"
-                    : "1px solid #ccc",
-                }}
-                value={
-                  bookingDates.startDate
-                }
-                onChange={(e) =>
-                  setBookingDates(
-                    (
-                      prev
-                    ) => ({
-                      ...prev,
-                      startDate:
-                        e.target.value,
-                    })
-                  )
-                }
-              />
-            </div>
-
-            <div
-              style={{
-                marginTop: "15px",
-              }}
-            >
-              <label>
-                End Date
-              </label>
-
-              <input
-                type="datetime-local"
-                style={{
-                  ...inputStyle,
-                  border: overlap
-                    ? "2px solid red"
-                    : "1px solid #ccc",
-                }}
-                value={
-                  bookingDates.endDate
-                }
-                onChange={(e) =>
-                  setBookingDates(
-                    (
-                      prev
-                    ) => ({
-                      ...prev,
-                      endDate:
-                        e.target.value,
-                    })
-                  )
-                }
-              />
-            </div>
-
-            {/* booked slots */}
+            <h4>
+              Unavailable
+              Slots
+            </h4>
 
             <div
-              style={{
-                marginTop: "20px",
-              }}
+              className={
+                styles.slotList
+              }
             >
-              <h4>
-                Unavailable Slots
-              </h4>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection:
-                    "column",
-                  gap: "10px",
-                  marginTop: "10px",
-                }}
-              >
-                {bookedSlots.map(
-                  (slot) => (
-                    <div
-                      key={slot._id}
-                      style={{
-                        background:
-                          "#fee2e2",
-                        color: "#991b1b",
-                        padding:
-                          "10px",
-                        borderRadius:
-                          "10px",
-                      }}
-                    >
-                      {new Date(
-                        slot.startDate
-                      ).toLocaleString()}
-                      {"  "}
-                      -
-                      {"  "}
-                      {new Date(
-                        slot.endDate
-                      ).toLocaleString()}
-                    </div>
-                  )
-                )}
-              </div>
+              {bookedSlots.map(
+                (
+                  slot
+                ) => (
+                  <div
+                    key={
+                      slot._id
+                    }
+                    className={
+                      styles.slot
+                    }
+                  >
+                    {new Date(
+                      slot.startDate
+                    ).toLocaleString()}
+                    {" - "}
+                    {new Date(
+                      slot.endDate
+                    ).toLocaleString()}
+                  </div>
+                )
+              )}
             </div>
 
             {overlap && (
               <p
-                style={{
-                  color: "red",
-                  marginTop: "15px",
-                }}
+                className={
+                  styles.error
+                }
               >
-                Selected timing overlaps
-                with another booking
+                Selected time
+                overlaps with
+                another booking
               </p>
             )}
 
             <div
-              style={{
-                display: "flex",
-                gap: "15px",
-                marginTop: "25px",
-              }}
+              className={
+                styles.modalActions
+              }
             >
               <button
-                style={{
-                  ...buttonStyle,
-                  opacity: overlap
-                    ? 0.5
-                    : 1,
-                }}
+                className={
+                  styles.primaryBtn
+                }
                 disabled={
-                  overlap ||
-                  bookingLoading
+                  overlap
                 }
                 onClick={
                   handleBooking
@@ -668,11 +651,9 @@ export default function Home() {
               </button>
 
               <button
-                style={{
-                  ...buttonStyle,
-                  background:
-                    "#e2e8f0",
-                }}
+                className={
+                  styles.secondaryBtn
+                }
                 onClick={() =>
                   setSelectedVenue(
                     null
@@ -688,50 +669,3 @@ export default function Home() {
     </div>
   );
 }
-
-const inputStyle = {
-  width: "100%",
-  padding: "12px",
-  borderRadius: "10px",
-  border: "1px solid #cbd5e1",
-  marginTop: "8px",
-};
-
-const cardStyle = {
-  background: "#ffffff",
-  padding: "20px",
-  borderRadius: "20px",
-  border: "1px solid #e2e8f0",
-  boxShadow:
-    "0 4px 10px rgba(0,0,0,0.05)",
-};
-
-const buttonStyle = {
-  marginTop: "15px",
-  padding: "12px 18px",
-  border: "none",
-  borderRadius: "10px",
-  cursor: "pointer",
-  background: "#bfdbfe",
-  color: "#1d4ed8",
-  fontWeight: "600",
-};
-
-const overlayStyle = {
-  position: "fixed",
-  inset: 0,
-  background: "rgba(0,0,0,0.4)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 1000,
-};
-
-const modalStyle = {
-  width: "500px",
-  maxHeight: "90vh",
-  overflowY: "auto",
-  background: "#ffffff",
-  borderRadius: "20px",
-  padding: "30px",
-};

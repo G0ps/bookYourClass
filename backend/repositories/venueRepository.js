@@ -1,3 +1,5 @@
+import Fuse from "fuse.js";
+
 import mainModel from "./models/mainModel.js";
 
 const venueModel = mainModel.venueModel;
@@ -114,7 +116,9 @@ export const getVenues = async ({
   }
 
   if (capacity) {
-    query.capacity = Number(capacity);
+    query.capacity = {
+      $gte: Number(capacity),
+    };
   }
 
   if (inchargeId) {
@@ -124,30 +128,6 @@ export const getVenues = async ({
     query.inchargeIds = {
       $in: idsArray,
     };
-  }
-
-  if (search) {
-    query.$or = [
-      {
-        name: {
-          $regex: search,
-          $options: "i",
-        },
-      },
-      {
-        block: {
-          $regex: search,
-          $options: "i",
-        },
-      },
-      {
-        _id: search.match(
-          /^[0-9a-fA-F]{24}$/
-        )
-          ? search
-          : null,
-      },
-    ];
   }
 
   let inchargeUsers = [];
@@ -170,20 +150,38 @@ export const getVenues = async ({
 
   const skip = (page - 1) * limit;
 
-  const venues = await venueModel
+  let venues = await venueModel
     .find(query)
     .populate(
       "inchargeIds",
       "name email"
     )
-    .skip(skip)
-    .limit(limit)
-    .sort({ name: 1 });
+    .lean();
 
+    if (search) {
+      const fuse = new Fuse(venues, {
+        keys: [
+          "name",
+          "block",
+        ],
+        threshold: 0.4,
+        includeScore: true,
+      });
+
+      venues = fuse
+        .search(search)
+        .map(
+          (result) => result.item
+        );
+    }
+  
   const totalVenues =
-    await venueModel.countDocuments(
-      query
-    );
+    venues.length;
+
+  venues = venues.slice(
+    skip,
+    skip + limit
+  );
 
   return {
     status: "success",
