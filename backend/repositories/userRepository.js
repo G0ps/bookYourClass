@@ -23,6 +23,7 @@ export const getUsers = async ({
           $options: "i",
         },
       },
+      {typeOfUser: { $ne: "admin" }},
       {
         email: {
           $regex: search,
