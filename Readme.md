@@ -1,4 +1,15 @@
 ### TRY NOW: https://bookyourclass-client.onrender.com
+---
+
+## 🔐 Demo Credentials
+
+### 👨‍💼 Admin Access
+- Email: admin@gmail.com  
+- Password: 12345  
+
+### 👨‍🏫 Staff Access
+- Email: staff@gmail.com  
+- Password: 123456 / 12345  
 
 # MERN Stack Project Deployment Guide On Local Machine
 
