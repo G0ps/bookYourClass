@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./MyBookings.module.css";
 
 import { ENDPOINTS } from "../../endpoints";
+import commonFunctions from "../commonFunctions";
 
 export default function MyBookings() {
   const navigate = useNavigate();
@@ -20,15 +21,39 @@ export default function MyBookings() {
   });
 
 
-  const handleUnauthorizedAccess = () => {
-    
-    handleLogout();
-    localStorage.clear();
-    sessionStorage.clear();
+  const handleUnauthorizedAccess = commonFunctions.handleUnauthorizedAccess
 
-    window.history.replaceState(null, "", "/");
+  const cancelBooking = async (bookingId) => {
+  try {
+    console.log("called cancel booking. ..")
+    const response = await fetch(
+      `${ENDPOINTS.BOOKING.CANCEL}/${bookingId}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      );
+      console.log("response from backed : " , response)
 
-    navigate("/", { replace: true });
+      if (
+        response.status === 401 ||
+        response.status === 403
+      ) {
+        handleUnauthorizedAccess(navigate);
+        return;
+      }
+
+      const data = await response.json();
+      console.log("response from booking cancelation : " , data)
+      if (data.status === "success") {
+        fetchBookings();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchBookings = async () => {
@@ -53,27 +78,27 @@ export default function MyBookings() {
         response.status === 401 ||
         response.status === 403
       ) {
-        handleUnauthorizedAccess();
+        handleUnauthorizedAccess(navigate);
         return;
       }
 
       const data = await response.json();
-      console.log("data my bookings : " , data)
+      // console.log("data my bookings : " , data)
 
       if (
         data.status === "unauthorized" ||
         data.status === "unauthenticated"
       ) {
-        handleUnauthorizedAccess();
+        handleUnauthorizedAccess(navigate);
         return;
       }
 
       if (data.status === "success") {
-        setBookings(data.bookings);
+        setBookings([...data.bookings]);
       }
     } catch (error) {
       console.error(error);
-      handleUnauthorizedAccess();
+      handleUnauthorizedAccess(navigate);
     }
   };
 
@@ -164,6 +189,16 @@ export default function MyBookings() {
                 booking.endDate
               ).toLocaleString()}
             </p>
+
+            {booking.status === "pending" && (
+              <button
+                onClick={() =>
+                  cancelBooking(booking._id)
+                }
+              >
+                Cancel Booking
+              </button>
+            )}
           </div>
         ))}
       </div>

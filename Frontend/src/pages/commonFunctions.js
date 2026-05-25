@@ -29,6 +29,18 @@ const logout = async (
   }
 };
 
+  const handleUnauthorizedAccess = async(navigate) => {
+    
+    await logout(navigate);
+    localStorage.clear();
+    sessionStorage.clear();
+
+    window.history.replaceState(null, "", "/");
+
+    navigate("/", { replace: true });
+  };
+
 export default {
   logout,
+  handleUnauthorizedAccess,
 };

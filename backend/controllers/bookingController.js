@@ -263,3 +263,37 @@ export const getAllBookingsForAdmin = async (req, res) => {
     });
   }
 };
+
+// cancel booking 
+export const cancelBooking = async (
+  req,
+  res
+) => {
+  try {
+    const { bookingId } = req.params;
+    const updateData = {status : "canceled"};
+    
+
+    const response =
+      await bookingRepository.cancelBooking(
+        bookingId,
+        updateData,
+        req.user.userId
+      );
+
+       if (response.status === "error") {
+        console.log("error : " , response)
+        return res.status(500).json(response);
+      }
+
+      return res.status(200).json(response);
+  }
+  catch(error)
+  {
+    console.log("error" , error);
+    return res.status(500).json({
+      status: "error",
+      error,
+    });
+  }
+}

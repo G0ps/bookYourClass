@@ -1,0 +1,31 @@
+Admin : 
+    function :
+        * edit user ✅
+        * add user ✅
+        * restrict access for only admin for the above aspects ✅
+
+        * edit venue ✅
+        * add venue ✅
+        * restrict access for only admin for the above aspects (use autherisation instead of writing various endpoints) ✅
+
+        * after accepting add a reject option : [booked venue to again non booked one]
+        * add a cancel booking option to user
+        * overlap cancelouts : (if a booking confimed other pending bookings that are overlapping should automatically marked rejected)
+        * while verifying whether there is any booking overlap . un accepted bookings are coming into consideration and gets terminated (while checking for booking integrity only completed bookings should be taken into consideration).
+        * enhance the filter
+    
+
+    frontend : 
+        * split the component structure and assign pages 
+        * provide staff details and venue details along with number IDs
+        * in booking portion remove stat based nav field and keep only the status drop down . 
+        * in user management , split the aspects of filter into seperate fields
+        
+Staff : 
+    function : 
+        * pagination for that always provide top K . even without match
+    frontend : 
+        * when book venue is pressed , need to do colour adjustments on the slider itself . to show pending bookings on that time and booked portions of that time . 
+
+    Overall :
+        Enhance UI : with light and dark theme setup

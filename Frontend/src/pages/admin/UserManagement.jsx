@@ -48,7 +48,10 @@ export default function UserManagement() {
           }
         );
 
+        console.log("res : users : " , res)
+
         const data = await res.json();
+        console.log("data : users : " , data)
 
         setUsers(data.users || []);
         setPagination(data.pagination);

@@ -240,9 +240,57 @@ const checkVenueBookingOverlap = async ({
   }
 };
 
+const cancelBooking = async (bookingId, updateData , userId) => {
+  try {
+    // check booking first
+    const booking = await bookingModel.findById(bookingId);
+
+    if (!booking) {
+      return {
+        status: "error",
+        message: "Booking not found",
+      };
+    }
+
+    // allow only user of that booking to cancel
+    if(userId !== booking.staffId.toString())
+    {
+      return {
+        status: "error",
+        message: "Only your bookings can be cancelled",
+      };
+    }
+
+    // allow cancel only if status is pending
+    if (booking.status !== "pending") {
+      return {
+        status: "error",
+        message: "Only pending bookings can be cancelled",
+      };
+    }
+
+    const updatedBooking = await bookingModel.findByIdAndUpdate(
+      bookingId,
+      { $set: updateData },
+      { new: true }
+    );
+
+    return {
+      status: "success",
+      bookingData: updatedBooking,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      error,
+    };
+  }
+};
+
 export default {
   insertNewBooking,
   updateBookingPatch,
+  cancelBooking,
   verifyStaffId,
   verifyVenueId,
   fetchBookingsByEmail,

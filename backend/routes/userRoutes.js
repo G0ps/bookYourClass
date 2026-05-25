@@ -13,8 +13,7 @@ const userRoutes = express.Router();
 userRoutes.get(
   "/",
   autherizationMiddleware(
-    "admin",
-    "staff"
+    "admin"
   ),
   getUsers
 );
@@ -22,8 +21,7 @@ userRoutes.get(
 userRoutes.patch(
   "/",
   autherizationMiddleware(
-    "admin",
-    "staff"
+    "admin"
   ),
   patchUser
 );
@@ -31,8 +29,7 @@ userRoutes.patch(
 userRoutes.delete(
   "/",
   autherizationMiddleware(
-    "admin",
-    "staff"
+    "admin"
   ),
   deleteUser
 );

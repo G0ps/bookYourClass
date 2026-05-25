@@ -15,31 +15,32 @@ const venueRoutes = express.Router();
 // manage venue
 venueRoutes.post(
   "/add",
-  autherizationMiddleware("staff", "admin"),
+  autherizationMiddleware("admin"),
   addVenue
 );
 
 venueRoutes.delete(
   "/:id",
-  autherizationMiddleware("staff", "admin"),
+  autherizationMiddleware("admin"),
   deleteVenue
 );
 
 venueRoutes.put(
   "/:id",
-  autherizationMiddleware("staff", "admin"),
+  autherizationMiddleware("admin"),
   putVenue
 );
 
 venueRoutes.patch(
   "/:id",
-  autherizationMiddleware("staff", "admin"),
+  autherizationMiddleware("admin"),
   patchVenue
 );
 
 // get venues // pagination
 venueRoutes.get(
   "/",
+  autherizationMiddleware("admin" , "staff"),
   getVenues
 );
 

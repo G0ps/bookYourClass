@@ -2,7 +2,7 @@ import express from "express";
 
 import autherizationMiddleware from "../middlewares/autherizationMiddleware.js";
 
-import { requestVenue , patchBooking, getAllBookingsOfStaff , getAllBookingsForAdmin } from "../controllers/bookingController.js";
+import { requestVenue , patchBooking, getAllBookingsOfStaff , getAllBookingsForAdmin , cancelBooking } from "../controllers/bookingController.js";
 
 const bookingRoutes = express.Router();
 
@@ -10,10 +10,16 @@ bookingRoutes.post("/" , autherizationMiddleware("admin" , "staff") , requestVen
 bookingRoutes.patch(
   "/:bookingId",
   autherizationMiddleware(
-    "admin",
-    "staff"
+    "admin"
   ),
   patchBooking
+);
+bookingRoutes.patch(
+  "/cancel/:bookingId",
+  autherizationMiddleware(
+    "staff"
+  ),
+  cancelBooking
 );
 
 bookingRoutes.get("/" , autherizationMiddleware("admin" , "staff") , getAllBookingsOfStaff)

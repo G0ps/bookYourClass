@@ -23,6 +23,7 @@ export const ENDPOINTS = {
     GET: `${BASE_URL}/booking`,
     PATCH: `${BASE_URL}/booking`,
     POST: `${BASE_URL}/booking`,
+    CANCEL : `${BASE_URL}/booking/cancel`
   },
   ADMIN : {
     BOOKING :{
