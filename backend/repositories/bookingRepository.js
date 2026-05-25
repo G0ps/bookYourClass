@@ -290,9 +290,46 @@ const cancelBooking = async (bookingId, updateData , userId) => {
   }
 };
 
+const rejectOverlappingBookings = async (
+  completedBooking
+) => {
+  try {
+    await bookingModel.updateMany(
+      {
+        _id: { $ne: completedBooking._id },
+        venueId: completedBooking.venueId,
+        status: "pending",
+
+        startDate: {
+          $lt: completedBooking.endDate,
+        },
+
+        endDate: {
+          $gt: completedBooking.startDate,
+        },
+      },
+      {
+        $set: {
+          status: "rejected",
+        },
+      }
+    );
+
+    return {
+      status: "success",
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      error,
+    };
+  }
+};
+
 export default {
   insertNewBooking,
   updateBookingPatch,
+  rejectOverlappingBookings,
   cancelBooking,
   verifyStaffId,
   verifyVenueId,

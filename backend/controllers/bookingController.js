@@ -111,32 +111,19 @@ export const requestVenue = async (req, res) => {
   }
 };
 
-export const patchBooking = async (
-  req,
-  res
-) => {
+export const patchBooking = async (req, res) => {
   try {
     const { bookingId } = req.params;
-
     const updateData = req.body;
 
-    if (
-      updateData.startDate &&
-      updateData.endDate
-    ) {
-      const start = new Date(
-        updateData.startDate
-      );
-
-      const end = new Date(
-        updateData.endDate
-      );
+    if (updateData.startDate && updateData.endDate) {
+      const start = new Date(updateData.startDate);
+      const end = new Date(updateData.endDate);
 
       if (start >= end) {
         return res.status(400).json({
           status: "error",
-          message:
-            "startDate must be lesser than endDate",
+          message: "startDate must be lesser than endDate",
         });
       }
     }
@@ -175,6 +162,17 @@ export const patchBooking = async (
         updateData
       );
 
+    if (response.status === "error") {
+      return res.status(400).json(response);
+    }
+
+    // If booking is approved/completed
+    if (updateData.status === "complete") {
+      await bookingRepository.rejectOverlappingBookings(
+        response.bookingData
+      );
+    }
+
     return res.status(200).json(response);
   } catch (error) {
     return res.status(500).json({
@@ -183,7 +181,6 @@ export const patchBooking = async (
     });
   }
 };
-
 
 export const getAllBookingsOfStaff = async (req, res) => {
   try {
