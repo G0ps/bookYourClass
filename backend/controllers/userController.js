@@ -39,39 +39,9 @@ export const patchUser = async (
       typeOfUser,
     } = req.body;
 
-    const missingFields = [];
-
-    if (!name) missingFields.push("name");
-    if (!email) missingFields.push("email");
-
-    if (!contactNumber)
-      missingFields.push("contactNumber");
-
-    if (!password)
-      missingFields.push("password");
-
-    if (!typeOfUser)
-      missingFields.push("typeOfUser");
-
-    if (missingFields.length > 0) {
-      return res.status(400).json({
-        status: "error",
-        message: "Missing required fields",
-        missingFields,
-      });
+    if (password) {
+      password = await bcrypt.hash(password, 10);
     }
-
-    if (
-      !["student", "staff"].includes(
-        typeOfUser
-      )
-    ) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid typeOfUser",
-      });
-    }
-
     const updateData = {
       name,
       email,
