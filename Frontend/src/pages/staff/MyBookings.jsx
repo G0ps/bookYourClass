@@ -130,7 +130,7 @@ export default function MyBookings() {
           }`}
           onClick={() => setActiveTab("complete")}
         >
-          Cancelled
+          complete
         </button>
 
         <button
