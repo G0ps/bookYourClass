@@ -20,7 +20,8 @@ app.use(express.json())
 app.use(cors({
     origin: [
         "http://localhost:5173",
-        "https://bookyourclassapplication.netlify.app"
+        "https://bookyourclassapplication.netlify.app",
+        "https://bookyourclass-client.onrender.com"
     ],
     credentials: true,
 }));
