@@ -41,6 +41,7 @@
 
 .input {
   width: 100%;
+  min-width: 0;
   padding: 14px;
   border: 1px solid #dbe2ea;
   border-radius: 14px;
@@ -184,9 +185,10 @@
   z-index: 1000;
 }
 
+
 .modal {
   width: 600px;
-  max-width: 95%;
+  max-width: calc(100vw - 20px);
   max-height: 90vh;
   overflow-y: auto;
   background: white;
@@ -194,6 +196,7 @@
   padding: 30px;
   box-shadow: 0 30px 60px
     rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
 .slotList {
@@ -206,6 +209,7 @@
 .slot {
   background: #fef2f2;
   color: #b91c1c;
+  word-break: break-word;
   padding: 12px;
   border-radius: 12px;
 }
@@ -230,4 +234,42 @@
   text-align: center;
   padding: 50px;
   color: #475569;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .hero {
+    padding: 24px;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .venueGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modal {
+    width: 95vw;
+    padding: 20px;
+  }
+
+  .modalActions {
+    flex-direction: column;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+  }
 }
