@@ -17,6 +17,8 @@ export const getUsers = async (req, res) => {
       search,
     });
 
+    
+
     return res.status(200).json(response);
   } catch (error) {
     return res.status(500).json({

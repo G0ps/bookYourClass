@@ -23,7 +23,6 @@ export const getUsers = async ({
           $options: "i",
         },
       },
-      {typeOfUser: { $ne: "admin" }},
       {
         email: {
           $regex: search,
@@ -37,34 +36,38 @@ export const getUsers = async ({
         },
       },
       {
-        _id: search.match(/^[0-9a-fA-F]{24}$/)
+        _id: /^[0-9a-fA-F]{24}$/.test(search)
           ? search
-          : null,
+          : undefined,
       },
     ];
   }
 
   const skip = (page - 1) * limit;
 
-  const users = await userModel
+  // fetch extra data to compensate for filtering
+  const rawUsers = await userModel
     .find(query)
     .skip(skip)
-    .limit(limit)
+    .limit(limit * 2) // fetch extra to avoid losing results
     .sort({ name: 1 });
 
-  const totalUsers =
-    await userModel.countDocuments(
-      query
-    );
+  // post-filter admin
+  const users = rawUsers.filter(
+    (user) => user.typeOfUser !== "admin"
+  );
+
+  const totalUsers = await userModel.countDocuments({
+    ...query,
+    typeOfUser: { $ne: "admin" }, // keep count accurate
+  });
 
   return {
     status: "success",
-    users,
+    users: users.slice(0, limit), // enforce limit after filtering
     pagination: {
       currentPage: page,
-      totalPages: Math.ceil(
-        totalUsers / limit
-      ),
+      totalPages: Math.ceil(totalUsers / limit),
       totalUsers,
       limit,
     },
@@ -73,12 +76,11 @@ export const getUsers = async ({
 
 const patchUser = async (userId, data) => {
   try {
-    const updatedUser =
-      await userModel.findByIdAndUpdate(
-        userId,
-        { $set: data },
-        { new: true }
-      );
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      { $set: data },
+      { new: true }
+    );
 
     return {
       status: "success",
@@ -94,10 +96,7 @@ const patchUser = async (userId, data) => {
 
 const deleteUser = async (userId) => {
   try {
-    const deletedUser =
-      await userModel.findByIdAndDelete(
-        userId
-      );
+    const deletedUser = await userModel.findByIdAndDelete(userId);
 
     return {
       status: "success",
@@ -111,19 +110,16 @@ const deleteUser = async (userId) => {
   }
 };
 
-const invalidateUserBookings = async (
-  userId
-) => {
+const invalidateUserBookings = async (userId) => {
   try {
-    const updatedBookings =
-      await bookingModel.updateMany(
-        { staffId: userId },
-        {
-          $set: {
-            status: "invalid",
-          },
-        }
-      );
+    const updatedBookings = await bookingModel.updateMany(
+      { staffId: userId },
+      {
+        $set: {
+          status: "invalid",
+        },
+      }
+    );
 
     return {
       status: "success",
