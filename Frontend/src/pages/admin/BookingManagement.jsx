@@ -13,26 +13,26 @@ export default function BookingManagement() {
     endDate: "",
   });
 
-  const fetchBookings = useCallback(async () => {
-    try {
-      const query = new URLSearchParams();
+const fetchBookings = useCallback(async (appliedFilters = filters) => {
+  try {
+    const query = new URLSearchParams();
 
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value) query.append(key, value);
-      });
+    Object.entries(appliedFilters).forEach(([key, value]) => {
+      if (value) query.append(key, value);
+    });
 
-      const res = await fetch(
-        `${ENDPOINTS.ADMIN.BOOKING.GET}?${query.toString()}`,
-        { credentials: "include" }
-      );
+    const res = await fetch(
+      `${ENDPOINTS.ADMIN.BOOKING.GET}?${query.toString()}`,
+      { credentials: "include" }
+    );
 
-      const data = await res.json();
-      setBookings(data.bookings || []);
-      console.log("bookings : " , data.bookings)
-    } catch (err) {
-      console.error(err);
-    }
-  }, [filters]);
+    const data = await res.json();
+    setBookings(data.bookings || []);
+    console.log("bookings : ", data.bookings);
+  } catch (err) {
+    console.error(err);
+  }
+}, []);
 
   useEffect(() => {
     fetchBookings();
@@ -106,7 +106,7 @@ export default function BookingManagement() {
           className={styles.input}
         />
 
-        <button onClick={fetchBookings} className={styles.searchBtn}>
+        <button onClick = {() => fetchBookings(filters)} className={styles.searchBtn}>
           Search
         </button>
       </div>
