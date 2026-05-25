@@ -531,55 +531,39 @@ export default function Home() {
               }
             </h2>
 
-            <input
-              type="datetime-local"
-              className={`${styles.input} ${
-                overlap
-                  ? styles.errorBorder
-                  : ""
-              }`}
-              value={
-                bookingDates.startDate
-              }
-              onChange={(
-                e
-              ) =>
-                setBookingDates(
-                  (
-                    prev
-                  ) => ({
-                    ...prev,
-                    startDate:
-                      e.target
-                        .value,
-                  })
-                )
-              }
-            />
+            <label className={styles.inputLabel}>
+              Start Date & Time
+            </label>
 
             <input
               type="datetime-local"
               className={`${styles.input} ${
-                overlap
-                  ? styles.errorBorder
-                  : ""
+                overlap ? styles.errorBorder : ""
               }`}
-              value={
-                bookingDates.endDate
+              value={bookingDates.startDate}
+              onChange={(e) =>
+                setBookingDates((prev) => ({
+                  ...prev,
+                  startDate: e.target.value,
+                }))
               }
-              onChange={(
-                e
-              ) =>
-                setBookingDates(
-                  (
-                    prev
-                  ) => ({
-                    ...prev,
-                    endDate:
-                      e.target
-                        .value,
-                  })
-                )
+            />
+
+            <label className={styles.inputLabel}>
+              End Date & Time
+            </label>
+
+            <input
+              type="datetime-local"
+              className={`${styles.input} ${
+                overlap ? styles.errorBorder : ""
+              }`}
+              value={bookingDates.endDate}
+              onChange={(e) =>
+                setBookingDates((prev) => ({
+                  ...prev,
+                  endDate: e.target.value,
+                }))
               }
             />
 

@@ -39,6 +39,8 @@
   margin-bottom: 30px;
 }
 
+
+
 .input {
   width: 100%;
   min-width: 0;
@@ -49,6 +51,7 @@
   font-size: 14px;
   transition: 0.25s;
   box-sizing: border-box;
+  display: block;
 }
 
 .input:focus {
@@ -185,7 +188,6 @@
   z-index: 1000;
 }
 
-
 .modal {
   width: 600px;
   max-width: calc(100vw - 20px);
@@ -197,6 +199,10 @@
   box-shadow: 0 30px 60px
     rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+}
+
+.modal input + input {
+  margin-top: 12px;
 }
 
 .slotList {
@@ -272,4 +278,11 @@
   .secondaryBtn {
     width: 100%;
   }
+}
+
+.inputLabel {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 600;
+  color: #334155;
 }
