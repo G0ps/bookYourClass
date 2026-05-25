@@ -28,10 +28,8 @@ Admin :
         
 Staff : 
     function : 
-        * pagination for that always provide top K . even without match
-        * in staff dashboard remove , unavailable slots
+        * pagination for that always provide top K . even without match ✅
+        * in staff dashboard remove , unavailable slots 
+        * give venue name filter with atmost similiraty aspect.
     frontend : 
         * when book venue is pressed , need to do colour adjustments on the slider itself . to show pending bookings on that time and booked portions of that time . 
-
-    Overall :
-        Enhance UI : with light and dark theme setup

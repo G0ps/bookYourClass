@@ -13,8 +13,10 @@ export default function MyBookings() {
 
   const [bookings, setBookings] = useState([]);
 
+  const [activeTab, setActiveTab] =
+  useState("pending");
+
   const [filters, setFilters] = useState({
-    email: "",
     venueId: "",
     startDate: "",
     endDate: "",
@@ -25,7 +27,7 @@ export default function MyBookings() {
 
   const cancelBooking = async (bookingId) => {
   try {
-    console.log("called cancel booking. ..")
+
     const response = await fetch(
       `${ENDPOINTS.BOOKING.CANCEL}/${bookingId}`,
         {
@@ -36,7 +38,7 @@ export default function MyBookings() {
           }
         }
       );
-      console.log("response from backed : " , response)
+
 
       if (
         response.status === 401 ||
@@ -113,20 +115,59 @@ export default function MyBookings() {
     }));
   };
 
+  const filteredBookings =
+  bookings.filter(
+    (booking) =>
+      booking.status === activeTab
+  );
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
         My Bookings
       </h1>
+      <div className={styles.navContainer}>
+  <button
+    className={`${styles.navButton} ${
+      activeTab === "pending"
+        ? styles.activeNav
+        : ""
+    }`}
+    onClick={() =>
+      setActiveTab("pending")
+    }
+  >
+    Pending
+  </button>
+
+  <button
+    className={`${styles.navButton} ${
+      activeTab === "cancelled"
+        ? styles.activeNav
+        : ""
+    }`}
+    onClick={() =>
+      setActiveTab("cancelled")
+    }
+  >
+    Cancelled
+  </button>
+
+  <button
+      className={`${styles.navButton} ${
+        activeTab === "rejected"
+          ? styles.activeNav
+          : ""
+      }`}
+      onClick={() =>
+        setActiveTab("rejected")
+      }
+    >
+      Rejected
+    </button>
+  </div>
 
       <div className={styles.filterContainer}>
-        <input
-          type="text"
-          name="email"
-          placeholder="User Email"
-          value={filters.email}
-          onChange={handleChange}
-        />
 
         <input
           type="text"
@@ -156,7 +197,7 @@ export default function MyBookings() {
       </div>
 
       <div className={styles.bookingGrid}>
-        {bookings.map((booking) => (
+        {filteredBookings.map((booking) => (
           <div
             className={styles.card}
             key={booking._id}
