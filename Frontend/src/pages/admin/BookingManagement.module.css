@@ -48,6 +48,10 @@
   cursor: pointer;
 }
 
+.bookingSection {
+  transition: all 0.3s ease;
+}
+
 .toggleBar {
   background: #cbd5e1;
 
@@ -74,6 +78,28 @@
   background: transparent;
 
   transition: 0.3s ease;
+}
+
+.tab {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #aaa;
+  transition: all 0.25s ease;
+}
+
+.tab:hover {
+  color: white;
+  transform: translateY(-1px);
+}
+
+.activeTab {
+  background: #4f46e5;
+  color: white;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  transform: scale(1.05);
 }
 
 .activeTab {

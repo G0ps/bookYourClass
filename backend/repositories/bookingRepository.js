@@ -188,8 +188,29 @@ const fetchBookingsWithFilters = async ({
       ];
     }
 
-    const bookings =
-      await bookingModel.find(query);
+    const bookingsRaw = await bookingModel.find(query);
+
+    // extract ids
+    const staffIds = [...new Set(bookingsRaw.map(b => b.staffId))];
+    const venueIds = [...new Set(bookingsRaw.map(b => b.venueId))];
+
+    // fetch related data
+    const [staffList, venueList] = await Promise.all([
+      userModel.find({ _id: { $in: staffIds } }).select("name"),
+      venueModel.find({ _id: { $in: venueIds } }).select("name")
+    ]);
+
+    // convert to map for fast lookup
+    const staffMap = new Map(staffList.map(s => [s._id.toString(), s.name]));
+    const venueMap = new Map(venueList.map(v => [v._id.toString(), v.name]));
+
+    // attach names
+    const bookings = bookingsRaw.map(b => ({
+      ...b.toObject(),
+      staffName: staffMap.get(b.staffId?.toString()),
+      venueName: venueMap.get(b.venueId?.toString()),
+    }));
+
 
     return {
       status: "success",
