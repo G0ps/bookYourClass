@@ -1,3 +1,4 @@
+// AdminDashboard.jsx
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styles from "./AdminDashboard.module.css";
@@ -20,7 +21,7 @@ export default function AdminDashboard() {
           className={styles.openBtn}
           onClick={() => setOpen(true)}
         >
-          ☰
+          ☰ <span>Menu</span>
         </button>
       )}
 
@@ -31,29 +32,34 @@ export default function AdminDashboard() {
           className={styles.closeBtn}
           onClick={() => setOpen(false)}
         >
-          ☰
+          ✕ Close
         </button>
 
-        <h2 className={styles.logo}>Admin</h2>
+        <div className={styles.brandContainer}>
+          <h2 className={styles.logo}>bookYourClass</h2>
+          <span className={styles.badge}>Admin Center</span>
+        </div>
 
-        <button onClick={() => handleNav("/admin/users")}>
-          Users
-        </button>
+        <nav className={styles.navGroup}>
+          <button onClick={() => handleNav("/admin/users")}>
+            Users
+          </button>
 
-        <button onClick={() => handleNav("/admin/venues")}>
-          Venues
-        </button>
+          <button onClick={() => handleNav("/admin/venues")}>
+            Venues
+          </button>
 
-        <button onClick={() => handleNav("/admin/bookings")}>
-          Bookings
-        </button>
+          <button onClick={() => handleNav("/admin/bookings")}>
+            Bookings
+          </button>
 
-        <button
-          className={styles.logout}
-          onClick={() => commonFunctions.logout(navigate)}
-        >
-          Logout
-        </button>
+          <button
+            className={styles.logout}
+            onClick={() => commonFunctions.logout(navigate)}
+          >
+            Logout
+          </button>
+        </nav>
       </aside>
 
       {/* MAIN */}

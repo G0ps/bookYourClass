@@ -1,180 +1,373 @@
+/* UserManagement.module.css */
+
 .container {
-  padding: 30px;
-  background: #f4f7fb;
-  min-height: 100vh;
-  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .heading {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 25px;
-  color: #1e293b;
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin: 0;
 }
 
-.filterSection {
-  background: #dbeafe;
-  padding: 20px;
-  border-radius: 16px;
+.addButton {
+  background: #4f46e5;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
   display: flex;
-  gap: 15px;
-  margin-bottom: 25px;
-  flex-wrap: wrap;
   align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  transition: all 0.2s ease;
+}
+
+.addButton:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+/* FILTERS */
+.filterSection {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01);
 }
 
 .input {
   flex: 1;
-  min-width: 280px;
-  padding: 14px;
-  border: none;
+  padding: 11px 14px;
+  border: 1px solid #cbd5e1;
   border-radius: 10px;
-  font-size: 15px;
   outline: none;
+  font-size: 14px;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
 }
 
 .select {
-  padding: 14px;
-  border: none;
+  width: 180px;
+  padding: 11px 14px;
+  border: 1px solid #cbd5e1;
   border-radius: 10px;
-  font-size: 15px;
-  min-width: 180px;
   outline: none;
+  font-size: 14px;
+  background-color: #f8fafc;
   cursor: pointer;
 }
 
-.userSection {
-  background: #e2e8f0;
-  padding: 25px;
-  border-radius: 16px;
+.input:focus, .select:focus {
+  border-color: #4f46e5;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
 
+/* USER GRID CARD INTERFACE */
+.userSection {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(300px, 1fr)
-  );
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .card {
-  background: white;
-  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 14px;
-  box-shadow: 0 2px 10px
-    rgba(0, 0, 0, 0.08);
-
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-
-  transition: 0.2s ease;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.01);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.06);
+  border-color: #cbd5e1;
 }
 
-.card span {
-  font-weight: 600;
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* TARGETED ROLE CLEARANCE BADGES */
+.roleBadge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 99px;
+  letter-spacing: 0.5px;
+}
+
+.student { background: #e0f2fe; color: #0369a1; }
+.staff { background: #f3e8ff; color: #6b21a8; }
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.infoLine {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13.5px;
+}
+
+.label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.val {
   color: #334155;
+  font-weight: 600;
+  text-align: right;
+  word-break: break-all;
 }
 
-.pagination {
-  margin-top: 25px;
+.uid {
+  font-family: monospace;
+  color: #94a3b8;
+  font-size: 12px;
+}
 
+.cardActions {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+}
+
+.editButton, .deleteButton {
+  flex: 1;
+  padding: 9px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.editButton {
+  background: #f8fafc;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+
+.editButton:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.deleteButton {
+  background: #fff5f5;
+  color: #ef4444;
+}
+
+.deleteButton:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* PAGINATION STYLINGS */
+.pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
+  margin-top: 12px;
 }
 
-.pagination button {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 10px;
-  background: #2563eb;
-  color: white;
-  cursor: pointer;
+.pageBtn {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
   font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.pagination button:disabled {
+.pageBtn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.pageBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.addButton {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 35px;
-  height: 35px;
-  border: none;
-  border-radius: 50%;
-  background: black;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
+.pageIndicator {
+  font-size: 14px;
+  color: #64748b;
 }
 
-.editButton {
-  margin-top: 12px;
-  padding: 8px 14px;
-  border: none;
-  background: black;
-  color: white;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
+/* PORTAL/MODAL OVERLAY SYSTEM */
 .modalOverlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .modalCard {
-  width: 400px;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 460px;
+  padding: 28px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: modalEnter 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.modalCard form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+@keyframes modalEnter {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.modalCard input,
-.modalCard select {
-  padding: 10px;
+.modalTitle {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.5px;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.formGroup input, .formGroup select {
+  padding: 11px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  outline: none;
+  font-size: 14px;
+  color: #334155;
+}
+
+.formGroup input:focus, .formGroup select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
 .modalActions {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
-}
-
-.cardActions {
-  display: flex;
-  gap: 10px;
   margin-top: 12px;
 }
 
-.cardActions button {
+.saveBtn, .cancelBtn {
   flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s ease;
 }
 
-.editButton {
-  padding: 8px 12px;
-  cursor: pointer;
+.saveBtn {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.saveBtn:hover { background: #4338ca; }
+
+.cancelBtn {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.cancelBtn:hover { background: #e2e8f0; }
+
+/* PHONE DISPLAY MEDIA QUERIES */
+@media (max-width: 640px) {
+  .headerRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filterSection {
+    flex-direction: column;
+  }
+  
+  .select {
+    width: 100%;
+  }
+
+  .userSection {
+    grid-template-columns: 1fr;
+  }
 }

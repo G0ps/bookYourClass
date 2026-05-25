@@ -1,3 +1,4 @@
+// BookingManagement.jsx
 import { useEffect, useState, useCallback } from "react";
 import styles from "./BookingManagement.module.css";
 import { ENDPOINTS } from "../../endpoints";
@@ -5,7 +6,6 @@ import { ENDPOINTS } from "../../endpoints";
 export default function BookingManagement() {
   const [bookings, setBookings] = useState([]);
   const [tab, setTab] = useState("pending");
-
   const [filters, setFilters] = useState({
     venueId: "",
     staffId: "",
@@ -13,26 +13,24 @@ export default function BookingManagement() {
     endDate: "",
   });
 
-const fetchBookings = useCallback(async (appliedFilters = filters) => {
-  try {
-    const query = new URLSearchParams();
+  const fetchBookings = useCallback(async (appliedFilters = filters) => {
+    try {
+      const query = new URLSearchParams();
+      Object.entries(appliedFilters).forEach(([key, value]) => {
+        if (value) query.append(key, value);
+      });
 
-    Object.entries(appliedFilters).forEach(([key, value]) => {
-      if (value) query.append(key, value);
-    });
-
-    const res = await fetch(
-      `${ENDPOINTS.ADMIN.BOOKING.GET}?${query.toString()}`,
-      { credentials: "include" }
-    );
-
-    const data = await res.json();
-    setBookings(data.bookings || []);
-    console.log("bookings : ", data.bookings);
-  } catch (err) {
-    console.error(err);
-  }
-}, []);
+      const res = await fetch(
+        `${ENDPOINTS.ADMIN.BOOKING.GET}?${query.toString()}`,
+        { credentials: "include" }
+      );
+      const data = await res.json();
+      setBookings(data.bookings || []);
+      console.log("bookings : ", data.bookings);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [filters]);
 
   useEffect(() => {
     fetchBookings();
@@ -49,7 +47,6 @@ const fetchBookings = useCallback(async (appliedFilters = filters) => {
           body: JSON.stringify({ status }),
         }
       );
-
       fetchBookings();
     } catch (err) {
       console.error(err);
@@ -68,45 +65,53 @@ const fetchBookings = useCallback(async (appliedFilters = filters) => {
     <div className={styles.container}>
       <h1 className={styles.heading}>Booking Management</h1>
 
-      {/* FILTERS (no status dropdown anymore) */}
+      {/* FILTERS */}
       <div className={styles.filterBox}>
-        <input
-          placeholder="Venue ID"
-          value={filters.venueId}
-          onChange={(e) =>
-            setFilters({ ...filters, venueId: e.target.value })
-          }
-          className={styles.input}
-        />
+        <div className={styles.inputField}>
+          <input
+            placeholder="Venue ID"
+            value={filters.venueId}
+            onChange={(e) =>
+              setFilters({ ...filters, venueId: e.target.value })
+            }
+            className={styles.input}
+          />
+        </div>
 
-        <input
-          placeholder="Staff ID"
-          value={filters.staffId}
-          onChange={(e) =>
-            setFilters({ ...filters, staffId: e.target.value })
-          }
-          className={styles.input}
-        />
+        <div className={styles.inputField}>
+          <input
+            placeholder="Staff ID"
+            value={filters.staffId}
+            onChange={(e) =>
+              setFilters({ ...filters, staffId: e.target.value })
+            }
+            className={styles.input}
+          />
+        </div>
 
-        <input
-          type="datetime-local"
-          value={filters.startDate}
-          onChange={(e) =>
-            setFilters({ ...filters, startDate: e.target.value })
-          }
-          className={styles.input}
-        />
+        <div className={styles.inputField}>
+          <input
+            type="datetime-local"
+            value={filters.startDate}
+            onChange={(e) =>
+              setFilters({ ...filters, startDate: e.target.value })
+            }
+            className={styles.input}
+          />
+        </div>
 
-        <input
-          type="datetime-local"
-          value={filters.endDate}
-          onChange={(e) =>
-            setFilters({ ...filters, endDate: e.target.value })
-          }
-          className={styles.input}
-        />
+        <div className={styles.inputField}>
+          <input
+            type="datetime-local"
+            value={filters.endDate}
+            onChange={(e) =>
+              setFilters({ ...filters, endDate: e.target.value })
+            }
+            className={styles.input}
+          />
+        </div>
 
-        <button onClick = {() => fetchBookings(filters)} className={styles.searchBtn}>
+        <button onClick={() => fetchBookings(filters)} className={styles.searchBtn}>
           Search
         </button>
       </div>
@@ -128,70 +133,71 @@ const fetchBookings = useCallback(async (appliedFilters = filters) => {
         )}
       </div>
 
-      {/* BOOKINGS */}
+      {/* BOOKINGS CONTAINER */}
       <div className={styles.bookingSection}>
-        {filteredBookings.map((b) => (
-          <div key={b._id} className={styles.card}>
-            <div>
-              <span>Booking ID:</span> {b._id}
-            </div>
+        {filteredBookings.length === 0 ? (
+          <div className={styles.noData}>No bookings found under this status.</div>
+        ) : (
+          filteredBookings.map((b) => (
+            <div key={b._id} className={styles.card}>
+              <div className={styles.cardHeader}>
+                <span className={styles.idLabel}>ID: {b._id}</span>
+                <span className={`${styles.statusBadge} ${styles[b.status] || ""}`}>
+                  {b.status}
+                </span>
+              </div>
 
-            <div>
-              <span>Venue:</span>{" "}
-              {b.venueId?.name || b.venueId}
-            </div>
-            <div>
-              <span>venue Name:</span> {b.venueName}
-            </div>
+              <div className={styles.cardBody}>
+                <div className={styles.metaRow}>
+                  <span className={styles.label}>Venue:</span>
+                  <div className={styles.valueInfo}>
+                    <p className={styles.mainVal}>{b.venueName || "Unnamed Venue"}</p>
+                    <p className={styles.subVal}>{b.venueId?.name || b.venueId}</p>
+                  </div>
+                </div>
 
-            <div>
-              <span>Staff:</span>{" "}
-              {b.staffId?.name || b.staffId}
-            </div>
-            <div>
-              <span>Staff Name:</span> {b.staffName}
-            </div>
+                <div className={styles.metaRow}>
+                  <span className={styles.label}>Staff:</span>
+                  <div className={styles.valueInfo}>
+                    <p className={styles.mainVal}>{b.staffName || "N/A"}</p>
+                    <p className={styles.subVal}>{b.staffId?.name || b.staffId}</p>
+                  </div>
+                </div>
 
-            <div>
-              <span>Status:</span> {b.status}
-            </div>
+                <div className={styles.timeBlock}>
+                  <div className={styles.timeCol}>
+                    <span className={styles.timeLabel}>Start Time</span>
+                    <span className={styles.timeValue}>{new Date(b.startDate).toLocaleString()}</span>
+                  </div>
+                  <div className={styles.timeCol}>
+                    <span className={styles.timeLabel}>End Time</span>
+                    <span className={styles.timeValue}>{new Date(b.endDate).toLocaleString()}</span>
+                  </div>
+                </div>
+              </div>
 
-            <div>
-              <span>Start:</span>{" "}
-              {new Date(b.startDate).toLocaleString()}
-            </div>
+              <div className={styles.actions}>
+                {b.status === "pending" && (
+                  <button
+                    className={styles.acceptBtn}
+                    onClick={() => updateBooking(b._id, "complete")}
+                  >
+                    Complete
+                  </button>
+                )}
 
-            <div>
-              <span>End:</span>{" "}
-              {new Date(b.endDate).toLocaleString()}
+                {(b.status === "pending" || b.status === "complete") && (
+                  <button
+                    className={styles.rejectBtn}
+                    onClick={() => updateBooking(b._id, "rejected")}
+                  >
+                    Reject
+                  </button>
+                )}
+              </div>
             </div>
-
-            <div className={styles.actions}>
-              {b.status === "pending" && (
-                <button
-                  className={styles.acceptBtn}
-                  onClick={() =>
-                    updateBooking(b._id, "complete")
-                  }
-                >
-                  Complete
-                </button>
-              )}
-
-              {(b.status === "pending" ||
-                b.status === "complete") && (
-                <button
-                  className={styles.rejectBtn}
-                  onClick={() =>
-                    updateBooking(b._id, "rejected")
-                  }
-                >
-                  Reject
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

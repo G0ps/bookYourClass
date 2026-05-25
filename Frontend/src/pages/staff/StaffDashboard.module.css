@@ -3,107 +3,260 @@
 .container {
   display: flex;
   min-height: 100vh;
-  background: #f3f4f6;
+  background: #0f1115; /* Elegant deep-dark mode contrast */
+  color: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* SIDEBAR LAYOUT CONFIGURATION */
 .sidebar {
-  background: #111827;
-  color: white;
-
-  transition: all 0.3s ease;
-
-  padding: 1.2rem;
+  background: linear-gradient(180deg, #161920 0%, #0b0d10 100%);
+  color: #f8fafc;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 1.5rem 1rem;
   box-sizing: border-box;
-
-  border-right: 1px solid #374151;
-
-  overflow: hidden;
-
+  border-right: 1px solid #242936;
   display: flex;
   flex-direction: column;
+  z-index: 100;
 }
 
 .open {
-  width: 260px;
+  width: 270px;
 }
 
 .closed {
-  width: 75px;
+  width: 78px;
+  align-items: center;
 }
 
-.toggleBtn {
-  background: #2563eb;
-  color: white;
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 50px;
+}
 
-  border: none;
-  border-radius: 8px;
-
-  width: 45px;
-  height: 45px;
-
-  font-size: 1.2rem;
-
-  cursor: pointer;
-
-  margin-bottom: 1.5rem;
+.brandContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .heading {
-  margin-bottom: 1.5rem;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.3px;
 }
 
+.subHeading {
+  font-size: 11px;
+  font-weight: 700;
+  color: #d4af37; /* Premium Gold theme tag */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.toggleBtn {
+  background: #1e2330;
+  color: #94a3b8;
+  border: 1px solid #2e3547;
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toggleBtn:hover {
+  color: #ffffff;
+  background: #242b3d;
+  border-color: #d4af37; /* Gold highlight border on action toggle */
+}
+
+.divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #242936;
+  margin: 1.5rem 0;
+}
+
+/* NAVIGATION LINKS ELEMENTS */
 .navLinks {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.link, .activeLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .link {
-  text-decoration: none;
-  color: #d1d5db;
-
-  padding: 0.8rem 1rem;
-
-  border-radius: 8px;
-
-  transition: 0.2s ease;
+  color: #94a3b8;
+  background: transparent;
 }
 
 .link:hover {
-  background: #1f2937;
-  color: white;
+  background: #1e2330;
+  color: #ffffff;
 }
 
 .activeLink {
-  text-decoration: none;
-
-  background: #2563eb;
-  color: white;
-
-  padding: 0.8rem 1rem;
-
-  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.02) 100%);
+  color: #ffffff;
+  border-left: 3px solid #d4af37; /* Striking Gold active bar */
+  font-weight: 600;
 }
 
+.icon {
+  font-size: 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+}
+
+.goldIcon {
+  color: #d4af37; /* Metallic Gold Accent */
+}
+
+.silverIcon {
+  color: #cbd5e1; /* Silver Accent */
+}
+
+.linkLabel {
+  margin-left: 14px;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+/* PROFILE LOGOUT BUTTON ACTIONS */
 .logoutBtn {
   margin-top: auto;
-
-  padding: 0.9rem;
-
-  border: none;
-  border-radius: 8px;
-
-  background: #dc2626;
-  color: white;
-
+  padding: 0.9rem 1.1rem;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.08); /* Pink/Red base tint */
+  color: #fca5a5;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+.logoutBtn:hover {
+  background: #ef4444; /* Clean Red exit focus state */
+  color: #ffffff;
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.logoutBtnClosed {
+  padding: 0.9rem 0;
+  justify-content: center;
+}
+
+.logoutIcon {
+  font-size: 1.2rem;
+}
+
+.logoutLabel {
+  margin-left: 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* MAIN BODY DISPLAY CANVAS */
 .main {
   flex: 1;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  background: #12141c; /* Deep Charcoal dashboard canvas background */
+  overflow-y: auto;
 }
 
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2.5rem;
+  background: #161920;
+  border-bottom: 1px solid #242936;
+  min-height: 70px;
+  box-sizing: border-box;
+}
+
+.systemStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.statusIndicator {
+  width: 7px;
+  height: 7px;
+  background-color: #10b981; /* Emerald Green operation state node */
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.userProfileBadge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #e2e8f0;
+  background: #1e2330;
+  padding: 6px 14px 6px 6px;
+  border-radius: 30px;
+  border: 1px solid #2e3547;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #cbd5e1 0%, #64748b 100%); /* Silver metallic profile avatar */
+  color: #0f1115;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.viewContent {
+  padding: 2.5rem;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+/* RESPONSIVE LAYOUT BREAKPOINTS */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -112,10 +265,47 @@
   .sidebar {
     width: 100% !important;
     border-right: none;
-    border-bottom: 1px solid #374151;
+    border-bottom: 1px solid #242936;
+    padding: 1rem;
   }
 
-  .main {
+  .closed {
+    align-items: stretch;
+  }
+
+  .toggleBtn {
+    display: none; /* Persistent mobile tracking list visibility */
+  }
+
+  .sidebarHeader {
+    margin-bottom: 0.5rem;
+  }
+
+  .divider {
+    margin: 0.8rem 0;
+  }
+
+  .navLinks {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .link, .activeLink {
+    justify-content: center;
+    padding: 0.7rem;
+  }
+
+  .logoutBtn {
+    margin-top: 1rem;
+    justify-content: center;
+    padding: 0.7rem;
+  }
+
+  .topBar {
     padding: 1rem;
+  }
+
+  .viewContent {
+    padding: 1.5rem;
   }
 }
