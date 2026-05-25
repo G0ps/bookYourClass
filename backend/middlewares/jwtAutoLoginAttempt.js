@@ -4,6 +4,8 @@ const jwtAutoLoginAttempt = async (req, res, next) => {
   try {
     const token = req.cookies?.token;
 
+    // console.log("token : " , token)
+
     // No token -> continue normally
     if (!token) {
       req.user = null;
@@ -14,6 +16,7 @@ const jwtAutoLoginAttempt = async (req, res, next) => {
     const decoded = await jwtService.verifyToken(token);
 
     // Invalid token -> clear and continue
+    // console.log("user decoded : " , decoded)
     if (!decoded) {
       res.clearCookie("token");
 
@@ -23,6 +26,7 @@ const jwtAutoLoginAttempt = async (req, res, next) => {
     }
 
     // Valid token
+
     req.user = decoded;
 
     req.isAuthenticated = true;

@@ -58,6 +58,15 @@ export const login = async (req, res) => {
         password
     } = req.body;
 
+    if(req.isAuthenticated)
+    {
+        return res.status(200).json({
+            status: "success",
+            role: req.user.role
+        })
+    }
+    // console.log("req : " , req.user)
+
     const missing_fields = [];
 
     if (!email) missing_fields.push("email");
