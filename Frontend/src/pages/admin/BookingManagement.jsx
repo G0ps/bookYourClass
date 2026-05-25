@@ -270,13 +270,12 @@ export default function BookingManagement() {
               ).toLocaleString()}
             </div>
 
-            {b.status === "pending" && (
               <div
                 className={
                   styles.actions
                 }
               >
-                <button
+              {b.status === "pending" && (<button
                   className={
                     styles.acceptBtn
                   }
@@ -289,8 +288,9 @@ export default function BookingManagement() {
                 >
                   Accept
                 </button>
+              )}
 
-                <button
+                {b.status === "pending" || b.status === "complete" && (<button
                   className={
                     styles.rejectBtn
                   }
@@ -302,9 +302,8 @@ export default function BookingManagement() {
                   }
                 >
                   Reject
-                </button>
+                </button>)}
               </div>
-            )}
           </div>
         ))}
       </div>

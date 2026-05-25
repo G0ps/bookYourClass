@@ -8,24 +8,28 @@ Admin :
         * add venue ✅
         * restrict access for only admin for the above aspects (use autherisation instead of writing various endpoints) ✅
 
-        * booking manager search and filter
+        * introduce names of venues and users instead of id
+        * booking manager search and filter (enhance the filter and not working at now)
 
-        * after accepting add a reject option : [booked venue to again non booked one]
+        * after accepting add a reject option : [booked venue to again non booked one] ✅
         * add a cancel booking option to user ✅
-        * overlap cancelouts : (if a booking confimed other pending bookings that are overlapping should automatically marked rejected)
-        * while verifying whether there is any booking overlap . un accepted bookings are coming into consideration and gets terminated (while checking for booking integrity only completed bookings should be taken into consideration).
-        * enhance the filter
+        * overlap cancelouts : (if a booking confimed other pending bookings that are overlapping should automatically marked rejected) ✅
+        * while verifying whether there is any booking overlap . 
+        un accepted bookings are coming into consideration and 
+        gets terminated (while checking for booking integrity 
+        only completed bookings should be taken into consideration).✅
     
 
     frontend : 
-        * split the component structure and assign pages 
         * provide staff details and venue details along with number IDs
-        * in booking portion remove stat based nav field and keep only the status drop down . 
+        * in booking portion keep stat based nav field and remove the status drop down . 
         * in user management , split the aspects of filter into seperate fields
+        * split the component structure and assign pages 
         
 Staff : 
     function : 
         * pagination for that always provide top K . even without match
+        * in staff dashboard remove , unavailable slots
     frontend : 
         * when book venue is pressed , need to do colour adjustments on the slider itself . to show pending bookings on that time and booked portions of that time . 
 
