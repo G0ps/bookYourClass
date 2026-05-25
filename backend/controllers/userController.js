@@ -1,5 +1,7 @@
 import userRepository from "../repositories/userRepository.js";
 
+import bchrypt from "bchrypt"
+
 export const getUsers = async (req, res) => {
   try {
     const {
