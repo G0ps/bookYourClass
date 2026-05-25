@@ -45,9 +45,9 @@ npm install
 
 Before launching the servers, you must configure the environment variables for both the backend and the frontend using the provided template files (`.EXENV`).
 
-### A. Backend Configuration (`base/backend/`)
+### A. Backend Configuration (`<base>/backend/`)
 
-1. Navigate to the `base/backend/` directory.
+1. Navigate to the `<base>/backend/` directory.
 2. Locate the sample file named `.EXENV`. It contains the following template variables:
 ```env
 APPLICATION_PORT=4000
@@ -57,7 +57,7 @@ JWT_SECRET=SECRET123
 ```
 
 
-3. Create a new file named `.env` in the `base/backend/` folder.
+3. Create a new file named `.env` in the `<base>/backend/` folder.
 4. Copy the contents of `.EXENV` into your new `.env` file and supply your MongoDB Connection String.
 
 #### 🌐 Guide to Get a MongoDB URL (MongoDB Atlas):
@@ -74,13 +74,13 @@ mongodb+srv://<username>:<password>@cluster0.yfkw4mn.mongodb.net/?retryWrites=tr
 ```
 
 
-7. Replace `<username>` and `<password>` with your database user credentials and paste this string into your `MONGO_URI` field inside `base/backend/.env`.
+7. Replace `<username>` and `<password>` with your database user credentials and paste this string into your `MONGO_URI` field inside `<base>/backend/.env`.
 
 ---
 
-### B. Frontend Configuration (`base/frontend/`)
+### B. Frontend Configuration (`<base>/frontend/`)
 
-1. Navigate to the `base/frontend/` directory.
+1. Navigate to the `<base>/frontend/` directory.
 2. Locate its `.EXENV` file, which looks like this:
 ```env
 VITE_BACKEND_URL=http://localhost:4000
@@ -89,7 +89,7 @@ VITE_API_TIMEOUT=10000
 ```
 
 
-3. Create a new file named `.env` in the `base/frontend/` folder.
+3. Create a new file named `.env` in the `<base>/frontend/` folder.
 4. Copy the contents of `.EXENV` into this newly created `.env` file. You can leave the defaults as they are for local execution.
 
 ---
@@ -100,10 +100,10 @@ To run the application, you need to execute the development server for both the 
 
 ### Terminal 1: Backend Server
 
-Navigate to the `base/backend` folder and run the development command:
+Navigate to the `<base>/backend` folder and run the development command:
 
 ```cmd
-cd base/backend
+cd <base>/backend
 npm run dev
 
 ```
@@ -119,10 +119,10 @@ MongoDB Connected: ac-yeutfnx-shard-00-00.yfkw4mn.mongodb.net
 
 ### Terminal 2: Frontend Server
 
-Navigate to the `base/frontend` folder and run the development command:
+Navigate to the `<base>/frontend` folder and run the development command:
 
 ```cmd
-cd base/frontend
+cd <base>/frontend
 npm run dev
 
 ```
