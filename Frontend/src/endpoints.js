@@ -4,6 +4,7 @@ export const ENDPOINTS = {
   AUTHENTICATION: {
     LOGIN: `${BASE_URL}/authentication/login`,
     LOGOUT: `${BASE_URL}/authentication/logout`,
+    REGISTER : `${BASE_URL}/authentication/register`
   },
 
   USER: {

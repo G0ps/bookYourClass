@@ -23,6 +23,7 @@ const insertNewVenue = async (data) => {
 
 const verifyStaffIds = async (staffIds) => {
   try {
+    if(staffIds === []) return true;
     const users = await userModel.find({
       _id: { $in: staffIds },
     });

@@ -106,3 +106,78 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.container {
+  position: relative;
+}
+
+.addButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.cardActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.editButton {
+  padding: 8px 14px;
+  border: none;
+  background: black;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  padding: 8px 14px;
+  border: none;
+  background: #d32f2f;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalCard {
+  width: 450px;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.modalCard form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modalCard input {
+  padding: 10px;
+}
+
+.modalActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}

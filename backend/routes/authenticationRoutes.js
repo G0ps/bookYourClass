@@ -4,10 +4,11 @@ import { login, logout, register } from "../controllers/authenticationController
 
 import autherizationMiddleware from "../middlewares/autherizationMiddleware.js";
 import jwtAutoLoginAttempt from "../middlewares/jwtAutoLoginAttempt.js";
+import authenticationMiddleware from "../middlewares/jwtAuthenticationMiddleware.js";
 
 const authRoutes = express.Router();
 
-authRoutes.post("/register", autherizationMiddleware("admin") , register);
+authRoutes.post("/register" ,authenticationMiddleware , register);
 authRoutes.post(
   "/login",
   jwtAutoLoginAttempt,

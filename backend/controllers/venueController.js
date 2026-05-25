@@ -9,7 +9,7 @@ export const addVenue = async (req, res) => {
     if (!name) missingFields.push("name");
     if (!block) missingFields.push("block");
     if (!capacity) missingFields.push("capacity");
-    if (!inchargeIds) missingFields.push("inchargeIds");
+    if(!inchargeIds) missingFields.push("inchargeIds")
 
     if (missingFields.length > 0) {
       return res.status(400).json({
@@ -20,7 +20,7 @@ export const addVenue = async (req, res) => {
     }
 
     const staffsExist = await venueRepository.verifyStaffIds(
-      inchargeIds
+      inchargeIds || []
     );
 
     if (!staffsExist) {
@@ -38,6 +38,11 @@ export const addVenue = async (req, res) => {
     };
 
     const response = await venueRepository.insertNewVenue(data);
+
+    if(response.status === "error")
+      {
+        throw response.error
+      }    
 
     return res.status(201).json({
       status: "success",

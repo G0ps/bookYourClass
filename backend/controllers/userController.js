@@ -30,8 +30,7 @@ export const patchUser = async (
   res
 ) => {
   try {
-    const userId = req.user._id;
-
+    const { userId } = req.params;
     const {
       name,
       email,
@@ -101,7 +100,7 @@ export const deleteUser = async (
   res
 ) => {
   try {
-    const userId = req.user._id;
+    const userId = req.params.userId;
 
     await userRepository.invalidateUserBookings(userId);
     const response =

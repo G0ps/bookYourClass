@@ -43,10 +43,7 @@ export const register = async (req , res) => {
             throw response.error;
         }
 
-        // assigning new token
-        jwt_service.assign_token(res , response.new_user);
-
-        return res.status(201).json({status : "success" , role : new_user.typeOfUser});
+        return res.status(201).json({status : "success"});
     }
     catch(error)
     {

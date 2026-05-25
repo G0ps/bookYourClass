@@ -19,7 +19,7 @@ userRoutes.get(
 );
 
 userRoutes.patch(
-  "/",
+  "/:userId",
   autherizationMiddleware(
     "admin"
   ),
@@ -27,7 +27,7 @@ userRoutes.patch(
 );
 
 userRoutes.delete(
-  "/",
+  "/:userId",
   autherizationMiddleware(
     "admin"
   ),

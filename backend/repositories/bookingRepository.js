@@ -223,6 +223,9 @@ const checkVenueBookingOverlap = async ({
               $gt: new Date(startDate),
             },
           },
+          {
+            status : "complete"
+          },  
         ],
       });
 

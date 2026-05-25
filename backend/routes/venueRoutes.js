@@ -20,19 +20,19 @@ venueRoutes.post(
 );
 
 venueRoutes.delete(
-  "/:id",
+  "/:venueId",
   autherizationMiddleware("admin"),
   deleteVenue
 );
 
 venueRoutes.put(
-  "/:id",
+  "/:venueId",
   autherizationMiddleware("admin"),
   putVenue
 );
 
 venueRoutes.patch(
-  "/:id",
+  "/:venueId",
   autherizationMiddleware("admin"),
   patchVenue
 );
