@@ -1,4 +1,5 @@
 import userRepository from "../repositories/userRepository.js";
+import bcrypt from "bcrypt";
 
 export const getUsers = async (req, res) => {
   try {
@@ -25,13 +26,12 @@ export const getUsers = async (req, res) => {
   }
 };
 
-export const patchUser = async (
-  req,
-  res
-) => {
+export const patchUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    const {
+    
+    // 1. Changed const to let to allow password re-assignment
+    let {
       name,
       email,
       contactNumber,
@@ -39,52 +39,29 @@ export const patchUser = async (
       typeOfUser,
     } = req.body;
 
-    const missingFields = [];
-
-    if (!name) missingFields.push("name");
-    if (!email) missingFields.push("email");
-
-    if (!contactNumber)
-      missingFields.push("contactNumber");
-
-    if (!password)
-      missingFields.push("password");
-
-    if (!typeOfUser)
-      missingFields.push("typeOfUser");
-
-    if (missingFields.length > 0) {
-      return res.status(400).json({
-        status: "error",
-        message: "Missing required fields",
-        missingFields,
-      });
+    if (password) {
+      password = await bcrypt.hash(password, 10);
     }
 
-    if (
-      !["student", "staff"].includes(
-        typeOfUser
-      )
-    ) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid typeOfUser",
-      });
+    // 2. Build the update object dynamically to avoid passing 'undefined' fields
+    const updateData = {};
+    if (name !== undefined) updateData.name = name;
+    if (email !== undefined) updateData.email = email;
+    if (contactNumber !== undefined) updateData.contactNumber = contactNumber;
+    if (password !== undefined) updateData.password = password;
+    if (typeOfUser !== undefined) updateData.typeOfUser = typeOfUser;
+
+    // Check if the body actually contained any fields to update
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ status: "error", message: "No update fields provided" });
     }
 
-    const updateData = {
-      name,
-      email,
-      contactNumber,
-      password,
-      typeOfUser,
-    };
+    const response = await userRepository.patchUser(userId, updateData);
 
-    const response =
-      await userRepository.patchUser(
-        userId,
-        updateData
-      );
+    // Optional: Handle 404 if user didn't exist (depends on your repository return value)
+    if (!response) {
+      return res.status(404).json({ status: "error", message: "User not found" });
+    }
 
     return res.status(200).json(response);
   } catch (error) {
@@ -95,18 +72,17 @@ export const patchUser = async (
   }
 };
 
-export const deleteUser = async (
-  req,
-  res
-) => {
+export const deleteUser = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const { userId } = req.params;
 
+    // Consider running these in a transaction if your repository/database supports it
     await userRepository.invalidateUserBookings(userId);
-    const response =
-      await userRepository.deleteUser(
-        userId
-      );
+    const response = await userRepository.deleteUser(userId);
+
+    if (!response) {
+      return res.status(404).json({ status: "error", message: "User not found" });
+    }
 
     return res.status(200).json(response);
   } catch (error) {
