@@ -1,13 +1,128 @@
-.container {
+/* WRAPPER */
+.wrapper {
+  min-height: 100vh;
+  background: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+
+/* OPEN BUTTON (LEFT SIDE) */
+.openBtn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+
+  z-index: 100;
+
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  font-size: 18px;
+  cursor: pointer;
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  color: #334155;
+}
+
+/* LEFT PANEL */
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 280px;
+  height: 100vh;
+
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+
   padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  /* hidden initially */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+
+  z-index: 1000;
+}
+
+/* OPEN STATE */
+.panel.open {
+  transform: translateX(0);
+}
+
+/* CLOSE BUTTON (TOP RIGHT INSIDE PANEL) */
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  border: none;
+  background: #f1f5f9;
+
+  padding: 6px 10px;
+  border-radius: 8px;
+
+  cursor: pointer;
+  font-size: 18px;
+
+  color: #334155;
+}
+
+/* LOGO */
+.logo {
+  margin-top: 40px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* NAV BUTTONS */
+.panel button {
+  border: none;
+  background: #f8fafc;
+
+  padding: 12px;
+  border-radius: 10px;
+
+  text-align: left;
+  font-weight: 600;
+
+  cursor: pointer;
+  color: #334155;
+
+  transition: 0.2s ease;
+}
+
+.panel button:hover {
+  background: #e0e7ff;
+  color: #1d4ed8;
+  transform: translateX(4px);
+}
+
+/* LOGOUT */
+.logout {
+  margin-top: auto;
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+/* MAIN */
+.main {
+  padding: 20px;
+
+  /* 🔥 key fix: reserve space for hamburger button */
+  padding-top: 70px;
 }
 
 .title {
-  margin-bottom: 20px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
 }

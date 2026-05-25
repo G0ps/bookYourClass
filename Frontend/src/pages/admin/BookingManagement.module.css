@@ -1,93 +1,100 @@
 .container {
-  min-height: 100vh;
-  padding: 30px;
-  background: #f1f5f9;
-}
+  min-height: fit-content;
+  height: 150vh;
+  display: flex;
+  flex-direction: column;
 
+  padding: 30px;
+
+  /* 👇 reduce padding to gain vertical space */
+  padding-bottom: 10px;
+
+  background: #f1f5f9;
+  overflow: hidden;
+}
 .heading {
   font-size: 34px;
   font-weight: 700;
   margin-bottom: 24px;
   color: #0f172a;
+
+  flex-shrink: 0;
 }
+
+/* FILTERS */
 
 .filterBox {
   background: #dbeafe;
-  padding: 24px;
+  padding: 16px;
   border-radius: 18px;
 
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
 
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(220px, 1fr)
-  );
+  margin-bottom: 16px;
 
-  gap: 18px;
-
-  margin-bottom: 30px;
+  flex-shrink: 0;
 }
 
+
 .input {
-  padding: 14px;
+  padding: 10px 12px;
   border: none;
   border-radius: 12px;
   outline: none;
-
-  font-size: 15px;
+  font-size: 14px;
 }
 
+/* BUTTON */
 .searchBtn {
   border: none;
   border-radius: 12px;
-
   background: #2563eb;
   color: white;
-
   font-weight: 600;
   cursor: pointer;
+  padding: 10px;
+  font-size: 14px;
 }
 
-.bookingSection {
-  transition: all 0.3s ease;
-}
 
+/* TABS */
 .toggleBar {
   background: #cbd5e1;
-
-  padding: 10px;
+  padding: 6px;
   border-radius: 14px;
 
   display: flex;
-  gap: 10px;
+  gap: 6px;
 
-  margin-bottom: 28px;
+  margin-bottom: 12px;
+
+  flex-shrink: 0;
 }
 
 .toggleBar button {
   flex: 1;
-
   border: none;
   border-radius: 10px;
-
   padding: 12px;
-
   font-weight: 600;
   cursor: pointer;
-
   background: transparent;
-
   transition: 0.3s ease;
 }
 
+/* TAB STATE */
+
 .tab {
-  padding: 8px 14px;
+  padding: 6px 10px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   background: transparent;
-  color: #aaa;
+  color: #6b7280;
   transition: all 0.25s ease;
+  font-size: 13px;
 }
 
 .tab:hover {
@@ -95,48 +102,50 @@
   transform: translateY(-1px);
 }
 
+/* FIXED DUPLICATE ISSUE (kept only one active style) */
 .activeTab {
   background: #4f46e5;
   color: white;
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
-.activeTab {
-  background: white;
-  transform: scale(1.02);
-}
-
+/* BOOKING GRID AREA (SCROLL ONLY HERE) */
 .bookingSection {
-  background: #e2e8f0;
-
-  padding: 24px;
-  border-radius: 18px;
+  flex: 1;
+  min-height: 400;
 
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
 
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(320px, 1fr)
-  );
+  padding: 10px;
 
-  gap: 22px;
+  overflow-y: auto;
+
+  /* IMPORTANT: reclaim space */
+  margin-top: 6px;
+
+  background: #e2e8f0;
+  border-radius: 18px;
+
+  scrollbar-width: thin;
 }
-
+/* CARD */
 .card {
-  background: white;
-
-  border-radius: 16px;
-
-  padding: 22px;
-
   display: flex;
   flex-direction: column;
+  gap: 8px;
 
-  gap: 12px;
+  padding: 14px;
+  border-radius: 10px;
 
-  box-shadow: 0 4px 14px
-    rgba(0, 0, 0, 0.08);
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+  max-height: fit-content;
+
+  min-width: 0;
 
   transition: 0.2s ease;
 }
@@ -150,6 +159,7 @@
   color: #1e293b;
 }
 
+/* ACTIONS */
 .actions {
   display: flex;
   gap: 12px;
@@ -159,15 +169,12 @@
 .acceptBtn,
 .rejectBtn {
   flex: 1;
-
   border: none;
   border-radius: 10px;
-
   padding: 12px;
 
   color: white;
   font-weight: 600;
-
   cursor: pointer;
 }
 
@@ -177,4 +184,39 @@
 
 .rejectBtn {
   background: #dc2626;
+}
+
+/* =========================
+   MOBILE FIXES
+========================= */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 14px;
+  }
+  .input {
+    padding: 10px;
+  }
+
+  .filterBox {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .toggleBar {
+    flex-wrap: wrap;
+  }
+
+  .bookingSection {
+    grid-template-columns: 1fr;
+  }
+
+  .heading {
+    font-size: 24px;
+  }
+
+  .tab {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
 }
