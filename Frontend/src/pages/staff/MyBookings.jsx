@@ -126,7 +126,7 @@ export default function MyBookings() {
 
         <button
           className={`${styles.navButton} ${
-            activeTab === "cancelled" ? styles.activeNav : ""
+            activeTab === "complete" ? styles.activeNav : ""
           }`}
           onClick={() => setActiveTab("complete")}
         >

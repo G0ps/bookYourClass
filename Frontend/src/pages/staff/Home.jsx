@@ -120,10 +120,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.hero}>
-        <h1>Campus Space Directory</h1>
-        <div className={styles.instructionBox}>
-          <p>Coordinate, review, and request allocations for auditoriums, halls, and multi-purpose facilities.</p>
-        </div>
+        <h1>SEARCH</h1>
       </div>
 
       <div className={styles.filters}>

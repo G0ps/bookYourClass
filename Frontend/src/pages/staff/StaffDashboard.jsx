@@ -23,11 +23,17 @@ export default function StaffDashboard() {
           >
             ☰
           </button>
-          {sidebarOpen && (
+          {sidebarOpen && (<>
             <div className={styles.brandContainer}>
               <h2 className={styles.heading}>Staff Portal</h2>
-              <span className={styles.subHeading}>Premium Venues</span>
             </div>
+
+            <span className={styles.userProfileBadge}>
+              <div className={styles.avatar}>ST</div>
+              <span>Staff Account</span>
+            </span>
+            </>
+            
           )}
         </div>
 
@@ -61,21 +67,12 @@ export default function StaffDashboard() {
           onClick={() => commonFunctions.logout(navigate)}
           title="Sign Out of Panel"
         >
-          <span className={styles.logoutIcon}>⎋</span>
-          {sidebarOpen && <span className={styles.logoutLabel}>Exit Console</span>}
+          {sidebarOpen && <span className={styles.logoutLabel}>Log Out</span>}
         </button>
       </aside>
 
       <main className={styles.main}>
         <header className={styles.topBar}>
-          <div className={styles.systemStatus}>
-            <span className={styles.statusIndicator}></span>
-            System Engine Active
-          </div>
-          <div className={styles.userProfileBadge}>
-            <div className={styles.avatar}>ST</div>
-            <span>Staff Account</span>
-          </div>
         </header>
         <div className={styles.viewContent}>
           <Outlet />

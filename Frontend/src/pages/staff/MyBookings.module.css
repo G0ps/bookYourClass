@@ -9,7 +9,7 @@
 
 .title {
   margin: 0;
-  color: #0f172a; /* Clear solid charcoal black */
+  color: #0f172a;
   font-size: 32px;
   font-weight: 800;
   letter-spacing: -0.75px;
@@ -19,18 +19,37 @@
 .navContainer {
   display: flex;
   gap: 8px;
+
   background: #ffffff;
   padding: 6px;
-  width: fit-content;
+
+  width: 100%;
+  max-width: 100%;
+
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  white-space: nowrap;
+  scroll-behavior: smooth;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.navContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .navButton {
+  flex-shrink: 0;
+
   border: none;
   background: transparent;
-  color: #475569; /* Clear deep gray for visibility */
+  color: #475569;
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
@@ -45,7 +64,7 @@
 }
 
 .activeNav {
-  background: #0f172a !important; /* High contrast dark background state */
+  background: #0f172a !important;
   color: #ffffff !important;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
 }
@@ -69,7 +88,7 @@
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   background: #f8fafc;
-  color: #0f172a; /* True dark text focus outputs */
+  color: #0f172a;
   font-size: 14px;
   transition: all 0.2s ease;
 }
@@ -96,7 +115,7 @@
   background: #0369a1;
 }
 
-/* CARDS DATA LAYOUT LAYER */
+/* CARDS DATA LAYOUT */
 .bookingGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -137,13 +156,13 @@
 
 .infoLine {
   font-size: 14px;
-  color: #334155; /* Distinct dark charcoal gray labeling */
+  color: #334155;
   margin: 0;
   line-height: 1.5;
 }
 
 .infoLine strong {
-  color: #0f172a; /* True high-priority dark weight indicators */
+  color: #0f172a;
   font-weight: 600;
   display: inline-block;
   width: 110px;
@@ -154,7 +173,7 @@
   font-weight: 500;
 }
 
-/* STATE MANAGEMENT BADGES */
+/* STATUS BADGES */
 .statusBadge {
   font-size: 11px;
   text-transform: uppercase;
@@ -182,13 +201,13 @@
   border: 1px solid rgba(220, 38, 38, 0.15);
 }
 
-/* INTERACTION DESTRUCTIVE ACTION BUTTON HOOKS */
+/* ACTION BUTTONS */
 .cancelBtn {
   margin-top: 0.5rem;
   width: 100%;
   padding: 0.75rem;
   background: #ffffff;
-  color: #b91c1c; /* Sharp clear red message font text styling elements */
+  color: #b91c1c;
   border: 1px solid #fca5a5;
   font-weight: 700;
   border-radius: 8px;
@@ -201,7 +220,7 @@
   border-color: #ef4444;
 }
 
-/* EMPTY CONTEXT FEEDBACK CONTAINER ELEMENTS */
+/* EMPTY STATE */
 .emptyState {
   grid-column: 1 / -1;
   text-align: center;
@@ -211,4 +230,35 @@
   background: #f8fafc;
   border: 1px dashed #cbd5e1;
   border-radius: 12px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .title {
+    font-size: 26px;
+  }
+
+  .navContainer {
+    width: 100%;
+  }
+
+  .navButton {
+    padding: 10px 16px;
+  }
+
+  .filterContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .bookingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .infoLine strong {
+    width: 95px;
+  }
 }

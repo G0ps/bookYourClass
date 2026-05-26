@@ -3,19 +3,19 @@
 .container {
   display: flex;
   min-height: 100vh;
-  background: #0f1115; /* Elegant deep-dark mode contrast */
-  color: #f1f5f9;
+  background: #f8fafc;
+  color: #1e293b;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* SIDEBAR LAYOUT CONFIGURATION */
+/* SIDEBAR */
 .sidebar {
-  background: linear-gradient(180deg, #161920 0%, #0b0d10 100%);
-  color: #f8fafc;
+  background: #ffffff;
+  color: #1e293b;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 1.5rem 1rem;
   box-sizing: border-box;
-  border-right: 1px solid #242936;
+  border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
   z-index: 100;
@@ -46,25 +46,23 @@
   font-size: 18px;
   font-weight: 800;
   margin: 0;
-  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #0f172a;
   letter-spacing: -0.3px;
 }
 
 .subHeading {
   font-size: 11px;
   font-weight: 700;
-  color: #d4af37; /* Premium Gold theme tag */
+  color: #2563eb;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: 2px;
 }
 
 .toggleBtn {
-  background: #1e2330;
-  color: #94a3b8;
-  border: 1px solid #2e3547;
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #cbd5e1;
   border-radius: 10px;
   width: 42px;
   height: 42px;
@@ -78,19 +76,19 @@
 }
 
 .toggleBtn:hover {
-  color: #ffffff;
-  background: #242b3d;
-  border-color: #d4af37; /* Gold highlight border on action toggle */
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #2563eb;
 }
 
 .divider {
   width: 100%;
   border: none;
-  border-top: 1px solid #242936;
+  border-top: 1px solid #e2e8f0;
   margin: 1.5rem 0;
 }
 
-/* NAVIGATION LINKS ELEMENTS */
+/* NAVIGATION */
 .navLinks {
   display: flex;
   flex-direction: column;
@@ -98,31 +96,32 @@
   width: 100%;
 }
 
-.link, .activeLink {
+.link,
+.activeLink {
   display: flex;
   align-items: center;
   text-decoration: none;
   padding: 0.9rem 1.1rem;
   border-radius: 12px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s ease;
   box-sizing: border-box;
   width: 100%;
 }
 
 .link {
-  color: #94a3b8;
+  color: #475569;
   background: transparent;
 }
 
 .link:hover {
-  background: #1e2330;
-  color: #ffffff;
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
 .activeLink {
-  background: linear-gradient(90deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.02) 100%);
-  color: #ffffff;
-  border-left: 3px solid #d4af37; /* Striking Gold active bar */
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-left: 3px solid #2563eb;
   font-weight: 600;
 }
 
@@ -134,12 +133,9 @@
   width: 24px;
 }
 
-.goldIcon {
-  color: #d4af37; /* Metallic Gold Accent */
-}
-
+.goldIcon,
 .silverIcon {
-  color: #cbd5e1; /* Silver Accent */
+  color: #2563eb;
 }
 
 .linkLabel {
@@ -148,14 +144,14 @@
   letter-spacing: 0.2px;
 }
 
-/* PROFILE LOGOUT BUTTON ACTIONS */
+/* LOGOUT */
 .logoutBtn {
   margin-top: auto;
   padding: 0.9rem 1.1rem;
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  border: 1px solid #fecaca;
   border-radius: 12px;
-  background: rgba(239, 68, 68, 0.08); /* Pink/Red base tint */
-  color: #fca5a5;
+  background: #fef2f2;
+  color: #dc2626;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -165,10 +161,10 @@
 }
 
 .logoutBtn:hover {
-  background: #ef4444; /* Clean Red exit focus state */
+  background: #dc2626;
   color: #ffffff;
-  border-color: #ef4444;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+  border-color: #dc2626;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
 }
 
 .logoutBtnClosed {
@@ -186,22 +182,23 @@
   font-weight: 600;
 }
 
-/* MAIN BODY DISPLAY CANVAS */
+/* MAIN */
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #12141c; /* Deep Charcoal dashboard canvas background */
+  background: #f8fafc;
   overflow-y: auto;
 }
 
+/* TOP BAR */
 .topBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 2.5rem;
-  background: #161920;
-  border-bottom: 1px solid #242936;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
   min-height: 70px;
   box-sizing: border-box;
 }
@@ -211,38 +208,43 @@
   align-items: center;
   gap: 8px;
   font-size: 12.5px;
-  color: #94a3b8;
+  color: #64748b;
   font-weight: 500;
 }
 
 .statusIndicator {
-  width: 7px;
-  height: 7px;
-  background-color: #10b981; /* Emerald Green operation state node */
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
   border-radius: 50%;
   display: inline-block;
-  box-shadow: 0 0 8px #10b981;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
 }
 
 .userProfileBadge {
   display: flex;
   align-items: center;
+  margin-left: auto;
   gap: 10px;
   font-size: 13.5px;
   font-weight: 600;
-  color: #e2e8f0;
-  background: #1e2330;
+  color: #334155;
+  background: #ffffff;
   padding: 6px 14px 6px 6px;
   border-radius: 30px;
-  border: 1px solid #2e3547;
+  border: 1px solid #e2e8f0;
 }
 
 .avatar {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #cbd5e1 0%, #64748b 100%); /* Silver metallic profile avatar */
-  color: #0f1115;
+  background: linear-gradient(
+    135deg,
+    #60a5fa 0%,
+    #2563eb 100%
+  );
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -251,12 +253,12 @@
 }
 
 .viewContent {
-  padding: 2.5rem;
+  padding: 2rem;
   flex: 1;
   box-sizing: border-box;
 }
 
-/* RESPONSIVE LAYOUT BREAKPOINTS */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -265,7 +267,7 @@
   .sidebar {
     width: 100% !important;
     border-right: none;
-    border-bottom: 1px solid #242936;
+    border-bottom: 1px solid #e2e8f0;
     padding: 1rem;
   }
 
@@ -274,7 +276,7 @@
   }
 
   .toggleBtn {
-    display: none; /* Persistent mobile tracking list visibility */
+    display: none;
   }
 
   .sidebarHeader {
@@ -290,7 +292,8 @@
     justify-content: space-around;
   }
 
-  .link, .activeLink {
+  .link,
+  .activeLink {
     justify-content: center;
     padding: 0.7rem;
   }
@@ -306,6 +309,6 @@
   }
 
   .viewContent {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 }

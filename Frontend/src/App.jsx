@@ -31,36 +31,26 @@ export default function App() {
               <AdminDashboard />
             </RoleProtectedRoutes>
           }
-        />
+        >
+          <Route index element={<UserManagement />} />
 
-        <Route
-          path="/admin/users"
-          element={
-            <RoleProtectedRoutes allowedRoles={["admin"]}>
-              <UserManagement />
-            </RoleProtectedRoutes>
-          }
-        />
+          <Route
+            path="users"
+            element={<UserManagement />}
+          />
 
-        <Route
-          path="/admin/venues"
-          element={
-            <RoleProtectedRoutes allowedRoles={["admin"]}>
-              <VenueManagement />
-            </RoleProtectedRoutes>
-          }
-        />
+          <Route
+            path="venues"
+            element={<VenueManagement />}
+          />
 
-        <Route
-          path="/admin/bookings"
-          element={
-            <RoleProtectedRoutes allowedRoles={["admin"]}>
-              <BookingManagement />
-            </RoleProtectedRoutes>
-          }
-        />
+          <Route
+            path="bookings"
+            element={<BookingManagement />}
+          />
+        </Route>
 
-        {/*staff routes*/}
+        {/* staff routes */}
         <Route
           path="/staff"
           element={
@@ -68,19 +58,22 @@ export default function App() {
               <StaffDashboard />
             </RoleProtectedRoutes>
           }
-        />
-        <Route
-            path="/staff/myBookings"
+        >
+          <Route
+            index
+            element={<Home />}
+          />
+
+          <Route
+            path="home"
+            element={<Home />}
+          />
+
+          <Route
+            path="myBookings"
             element={<MyBookings />}
           />
-          <Route
-          path="/staff/home"
-          element={
-            <RoleProtectedRoutes allowedRoles={["staff", "admin"]}>
-              <Home></Home>
-            </RoleProtectedRoutes>
-          }
-        />
+        </Route>
 
       </Routes>
     </BrowserRouter>

@@ -1,5 +1,4 @@
-// AdminDashboard.jsx
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styles from "./AdminDashboard.module.css";
 import commonFunctions from "../commonFunctions.js";
@@ -15,7 +14,6 @@ export default function AdminDashboard() {
 
   return (
     <div className={styles.wrapper}>
-      {/* OPEN BUTTON */}
       {!open && (
         <button
           className={styles.openBtn}
@@ -25,9 +23,7 @@ export default function AdminDashboard() {
         </button>
       )}
 
-      {/* LEFT PANEL */}
       <aside className={`${styles.panel} ${open ? styles.open : ""}`}>
-        {/* CLOSE BUTTON */}
         <button
           className={styles.closeBtn}
           onClick={() => setOpen(false)}
@@ -62,9 +58,8 @@ export default function AdminDashboard() {
         </nav>
       </aside>
 
-      {/* MAIN */}
       <main className={styles.main}>
-        <h1 className={styles.title}>Admin Dashboard</h1>
+        <Outlet />
       </main>
     </div>
   );
