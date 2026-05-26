@@ -1,3 +1,10 @@
+## 📑 Quick Navigation
+
+- [🚀 Try Now](#-try-now)
+- [🤝 Contribute](#-contribute)
+- [💻 Local Setup Guide](#-my-system-specifications)
+
+---
 ### TRY NOW: https://bookyourclass-client.onrender.com
 ---
 
@@ -15,6 +22,46 @@
 
 A step-by-step setup guide to run this full-stack application locally on Windows 11.
 
+---
+
+
+# 🤝 Contribute
+
+Contributions are welcome.
+
+### Contribution Process
+
+1. Fork the repository.
+2. Create a new feature branch.
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+3. Implement your changes.
+4. Create a brief document describing:
+   - The problem identified.
+   - The solution implemented.
+   - Files/modules affected.
+   - Any assumptions or limitations.
+5. Commit and push your changes.
+6. Open a Pull Request with a clear description of the update.
+
+### Pull Request Guidelines
+
+Include:
+
+- Feature/Fix title
+- Problem statement
+- Solution summary
+- Screenshots (if UI changes are involved)
+- Testing details
+
+### Contact
+
+For questions or contribution-related discussions:
+
+📧 Email: gopinathshanmugavel@gmail.com
 ---
 
 ### 💻 My System Specifications
