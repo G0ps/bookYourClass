@@ -6,9 +6,9 @@ export const requestVenue = async (req, res) => {
       venueId,
       startDate,
       endDate,
-    } = req.body; 
+    } = req.body;
 
-    const staffId = req.user.userId
+    const staffId = req.user.userId;
 
     const missingFields = [];
 
@@ -28,11 +28,32 @@ export const requestVenue = async (req, res) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
 
+    if (
+      isNaN(start.getTime()) ||
+      isNaN(end.getTime())
+    ) {
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid date format",
+      });
+    }
+
     if (start >= end) {
       return res.status(400).json({
         status: "error",
         message:
           "startDate must be lesser than endDate",
+      });
+    }
+
+    // Prevent bookings in the past
+    const now = new Date();
+
+    if (start < now) {
+      return res.status(400).json({
+        status: "error",
+        message:
+          "Cannot create bookings for past time slots",
       });
     }
 
@@ -60,13 +81,6 @@ export const requestVenue = async (req, res) => {
       });
     }
 
-    const data = {
-      venueId,
-      staffId,
-      startDate,
-      endDate,
-    };
-
     const overlapResponse =
       await bookingRepository.checkVenueBookingOverlap(
         {
@@ -86,13 +100,19 @@ export const requestVenue = async (req, res) => {
           overlapResponse.overlappingBookings.map(
             (booking) => ({
               bookingId: booking._id,
-              startDate:
-                booking.startDate,
+              startDate: booking.startDate,
               endDate: booking.endDate,
             })
           ),
       });
     }
+
+    const data = {
+      venueId,
+      staffId,
+      startDate,
+      endDate,
+    };
 
     const response =
       await bookingRepository.insertNewBooking(
